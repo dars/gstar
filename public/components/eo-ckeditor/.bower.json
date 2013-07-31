@@ -1,0 +1,18 @@
+{
+  "name": "eo-ckeditor",
+  "main": "ckeditor.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "homepage": "https://github.com/eymengunay/ckeditor",
+  "_release": "229f8dac1b",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "229f8dac1b6284b293fb69186aff5af78321f2d9"
+  },
+  "_source": "git://github.com/eymengunay/ckeditor.git",
+  "_target": "*"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "gstar",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "git://github.com/angular/bower-angular.git",
+    "eo-ckeditor": "git://github.com/eymengunay/ckeditor.git",
+    "requirejs": "*"
+  }
+}
