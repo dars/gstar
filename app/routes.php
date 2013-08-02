@@ -47,7 +47,4 @@ Route::group(array('prefix' => 'admin', 'before'=>'auth'), function(){
 // Route::controller('home', 'HomeController');
 // Route::controller('admin', 'AdminController');
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', array('as' => 'front.index', 'uses' => 'Controllers\HomeController@index'));

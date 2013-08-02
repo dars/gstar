@@ -1,17 +1,19 @@
 <?php
+namespace Controllers;
+use BaseController;
 
-class HomeController extends \BaseController {
+class HomeController extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-    protected $layout = 'layouts.admin.master';
+    protected $layout = 'frontend.layouts.master';
 
-	public function get_index()
+	public function index()
 	{
-		$this->layout->content = View::make('hello', array('name'=>'GAGA'));
+		//$this->layout->content = View::make('hello', array('name'=>'GAGA'));
 	}
 
 	/**

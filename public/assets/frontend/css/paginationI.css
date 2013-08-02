@@ -1,0 +1,364 @@
+
+	/*****************************************************************/
+	/*	I																				  */
+	/*****************************************************************/
+
+	ul.paginationI li,
+	ul.paginationI li a
+	{
+		color:#FFFFFF;
+		border-radius:3px;	
+		-moz-border-radius:3px;
+		-webkit-border-radius:3px;
+	}
+
+	ul.paginationI01 li a,
+	ul.paginationI02 li a,
+	ul.paginationI03 li a,
+	ul.paginationI04 li a,
+	ul.paginationI05 li a
+	{
+		color:#444444;
+		padding:6px 9px 6px 9px;
+		border:solid 1px #BCBCBC;
+		background:#F3F3F3;
+		background:-moz-linear-gradient(top,#FFFFFF 1px,#FEFEFE 1px,#F3F3F3);
+		background:-webkit-gradient(linear,0 0,0 100%,color-stop(0.02,#FFFFFF),color-stop(0.02,#FEFEFE),color-stop(1,#F3F3F3));	
+	}
+	
+	ul.paginationI li a img
+	{
+		*margin:2px 0px 2px 0px;
+	}
+		
+	/*****************************************************************/
+	/*	01																				  */
+	/*****************************************************************/
+	
+	ul.paginationI01 li a.first,
+	ul.paginationI01 li a.previous,
+	ul.paginationI01 li a.next,
+	ul.paginationI01 li a.last,
+	ul.paginationI01 li a.current,
+	ul.paginationI01 li a:hover
+	{
+		border-color:#77AADD;
+		background:#DEEEFF;
+		background:-moz-linear-gradient(top,#FFFFFF 1px,#EBF5FF 1px,#DEEEFF);
+		background:-webkit-gradient(linear,0 0,0 100%,color-stop(0.02,#FFFFFF),color-stop(0.02,#EBF5FF),color-stop(1,#DEEEFF));	
+	}
+	
+	/*****************************************************************/
+	/*	02																				  */
+	/*****************************************************************/
+	
+	ul.paginationI02 li a.first,
+	ul.paginationI02 li a.previous,
+	ul.paginationI02 li a.next,
+	ul.paginationI02 li a.last,
+	ul.paginationI02 li a.current,
+	ul.paginationI02 li a:hover
+	{
+		border-color:#BC8484;
+		background:#F2DFDF;
+		background:-moz-linear-gradient(top,#FFFFFF 1px,#F9EFEF 1px,#F2DFDF);
+		background:-webkit-gradient(linear,0 0,0 100%,color-stop(0.02,#FFFFFF),color-stop(0.02,#F9EFEF),color-stop(1,#F2DFDF));	
+	}
+	
+	/*****************************************************************/
+	/*	03																				  */
+	/*****************************************************************/
+	
+	ul.paginationI03 li a.first,
+	ul.paginationI03 li a.previous,
+	ul.paginationI03 li a.next,
+	ul.paginationI03 li a.last,
+	ul.paginationI03 li a.current,
+	ul.paginationI03 li a:hover
+	{
+		border-color:#74AF45;
+		background:#E2F4D3;
+		background:-moz-linear-gradient(top,#FFFFFF 1px,#EFF5E9 1px,#E2F4D3);
+		background:-webkit-gradient(linear,0 0,0 100%,color-stop(0.02,#FFFFFF),color-stop(0.02,#EFF5E9),color-stop(1,#E2F4D3));	
+	}
+	
+	/*****************************************************************/
+	/*	04																				  */
+	/*****************************************************************/
+	
+	ul.paginationI04 li a.first,
+	ul.paginationI04 li a.previous,
+	ul.paginationI04 li a.next,
+	ul.paginationI04 li a.last,
+	ul.paginationI04 li a.current,
+	ul.paginationI04 li a:hover
+	{
+		border-color:#CE9900;
+		background:#FFE592;
+		background:-moz-linear-gradient(top,#FFFFFF 1px,#FFF0C1 1px,#FFE592);
+		background:-webkit-gradient(linear,0 0,0 100%,color-stop(0.02,#FFFFFF),color-stop(0.02,#FFF0C1),color-stop(1,#FFE592));	
+	}
+	
+	/*****************************************************************/
+	/*	05																				  */
+	/*****************************************************************/
+	
+	ul.paginationI05 li a.first,
+	ul.paginationI05 li a.previous,
+	ul.paginationI05 li a.next,
+	ul.paginationI05 li a.last,
+	ul.paginationI05 li a.current,
+	ul.paginationI05 li a:hover
+	{
+		border-color:#9D9D9D;
+		background:#D9D9D9;
+		background:-moz-linear-gradient(top,#FFFFFF 1px,#EAEAEA 1px,#D9D9D9);
+		background:-webkit-gradient(linear,0 0,0 100%,color-stop(0.02,#FFFFFF),color-stop(0.02,#EAEAEA),color-stop(1,#D9D9D9));	
+	}
+	
+	/*****************************************************************/
+	/*	06																				  */
+	/*****************************************************************/
+	
+	ul.paginationI06 li a
+	{
+		background:#E6650C;
+		background:-moz-linear-gradient(top,#FF9C00,#E6650C);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#FF9C00),to(#E6650C));	
+	}
+	
+	ul.paginationI06 li a.current,
+	ul.paginationI06 li a:hover
+	{
+		background:#683664;
+		background:-moz-linear-gradient(top,#83457E,#683664);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#83457E),to(#683664));	
+	}
+	
+	/*****************************************************************/
+	/*	07																				  */
+	/*****************************************************************/
+	
+	ul.paginationI07 li a
+	{
+		background:#683664;
+		background:-moz-linear-gradient(top,#83457E,#683664);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#83457E),to(#683664));	
+	}
+	
+	ul.paginationI07 li a.current,
+	ul.paginationI07 li a:hover
+	{
+		background:#E6650C;
+		background:-moz-linear-gradient(top,#FF9C00,#E6650C);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#FF9C00),to(#E6650C));	
+	}
+	
+	/*****************************************************************/
+	/*	08																				  */
+	/*****************************************************************/
+	
+	ul.paginationI08 li a
+	{
+		background:#105C90;
+		background:-moz-linear-gradient(top,#2775AA,#105C90);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#2775AA),to(#105C90));	
+	}
+	
+	ul.paginationI08 li a.current,
+	ul.paginationI08 li a:hover
+	{
+		background:#348800;
+		background:-moz-linear-gradient(top,#42AC00,#348800);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#42AC00),to(#348800));	
+	}	
+	
+	/*****************************************************************/
+	/*	09																				  */
+	/*****************************************************************/
+	
+	ul.paginationI09 li a
+	{
+		background:#348800;
+		background:-moz-linear-gradient(top,#42AC00,#348800);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#42AC00),to(#348800));	
+	}
+	
+	ul.paginationI09 li a.current,
+	ul.paginationI09 li a:hover
+	{
+		background:#966B5E;
+		background:-moz-linear-gradient(top,#B68D81,#966B5E);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#B68D81),to(#966B5E));	
+	}
+	
+	/*****************************************************************/
+	/*	10																				  */
+	/*****************************************************************/
+	
+	ul.paginationI10 li a
+	{
+		background:#A8436E;
+		background:-moz-linear-gradient(top,#C8618D,#A8436E);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#C8618D),to(#A8436E));	
+	}
+	
+	ul.paginationI10 li a.current,
+	ul.paginationI10 li a:hover
+	{
+		background:#E6650C;
+		background:-moz-linear-gradient(top,#FF9C00,#E6650C);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#FF9C00),to(#E6650C));	
+	}
+	
+	/*****************************************************************/
+	/*	11																				  */
+	/*****************************************************************/
+	
+	ul.paginationI11 li a
+	{
+		background:#1889B2;
+		background:-moz-linear-gradient(top,#26BDD5,#1889B2);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#26BDD5),to(#1889B2));	
+	}
+	
+	ul.paginationI11 li a.current,
+	ul.paginationI11 li a:hover
+	{
+		background:#E6650C;
+		background:-moz-linear-gradient(top,#FF9C00,#E6650C);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#FF9C00),to(#E6650C));	
+	}
+	
+	/*****************************************************************/
+	/*	12																				  */
+	/*****************************************************************/
+	
+	ul.paginationI12 li a
+	{
+		background:#208B32;
+		background:-moz-linear-gradient(top,#36A949,#208B32);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#36A949),to(#208B32));	
+	}
+	
+	ul.paginationI12 li a.current,
+	ul.paginationI12 li a:hover
+	{
+		background:#E6650C;
+		background:-moz-linear-gradient(top,#FF9C00,#E6650C);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#FF9C00),to(#E6650C));	
+	}
+	
+	/*****************************************************************/
+	/*	13																				  */
+	/*****************************************************************/
+	
+	ul.paginationI13 li a
+	{
+		background:#B11C34;
+		background:-moz-linear-gradient(top,#D63048,#B11C34);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#D63048),to(#B11C34));	
+	}
+	
+	ul.paginationI13 li a.current,
+	ul.paginationI13 li a:hover
+	{
+		background:#E6650C;
+		background:-moz-linear-gradient(top,#FF9C00,#E6650C);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#FF9C00),to(#E6650C));	
+	}
+	
+	/*****************************************************************/
+	/*	14																				  */
+	/*****************************************************************/
+	
+	ul.paginationI14 li a
+	{
+		background:#7D4835;
+		background:-moz-linear-gradient(top,#A3644F,#7D4835);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#A3644F),to(#7D4835));	
+	}
+	
+	ul.paginationI14 li a.current,
+	ul.paginationI14 li a:hover
+	{
+		background:#E6650C;
+		background:-moz-linear-gradient(top,#FF9C00,#E6650C);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#FF9C00),to(#E6650C));	
+	}
+	
+	/*****************************************************************/
+	/*	15																				  */
+	/*****************************************************************/
+	
+	ul.paginationI15 li a
+	{
+		background:#966B5E;
+		background:-moz-linear-gradient(top,#B68D81,#966B5E);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#B68D81),to(#966B5E));	
+	}
+	
+	ul.paginationI15 li a.current,
+	ul.paginationI15 li a:hover
+	{
+		background:#348800;
+		background:-moz-linear-gradient(top,#41AB00,#348800);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#41AB00),to(#348800));	
+	}
+	
+	/*****************************************************************/
+	/*	16																				  */
+	/*****************************************************************/
+	
+	ul.paginationI16 li a
+	{
+		background:#E6650C;
+		background:-moz-linear-gradient(top,#FF9C00,#E6650C);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#FF9C00),to(#E6650C));	
+	}
+	
+	ul.paginationI16 li a.current,
+	ul.paginationI16 li a:hover
+	{
+		background:#348800;
+		background:-moz-linear-gradient(top,#42AC00,#348800);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#42AC00),to(#348800));	
+	}
+	
+	/*****************************************************************/
+	/*	17																				  */
+	/*****************************************************************/
+	
+	ul.paginationI17 li a
+	{
+		background:#105C90;
+		background:-moz-linear-gradient(top,#2775AA,#105C90);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#2775AA),to(#105C90));	
+	}
+	
+	ul.paginationI17 li a.current,
+	ul.paginationI17 li a:hover
+	{
+		background:#AE2626;
+		background:-moz-linear-gradient(top,#DE423B,#AE2626);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#DE423B),to(#AE2626));	
+	}
+	
+	/*****************************************************************/
+	/*	18																				  */
+	/*****************************************************************/
+	
+	ul.paginationI18 li a
+	{
+		background:#474747;
+		background:-moz-linear-gradient(top,#5D5D5D,#474747);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#5D5D5D),to(#474747));	
+	}
+	
+	ul.paginationI18 li a.current,
+	ul.paginationI18 li a:hover
+	{
+		background:#3377B5;
+		background:-moz-linear-gradient(top,#4798D6,#3377B5);
+		background:-webkit-gradient(linear,0 0,0 100%,from(#4798D6),to(#3377B5));	
+	}
