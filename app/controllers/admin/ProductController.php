@@ -47,7 +47,28 @@ class ProductController extends BaseController {
      */
     public function store()
     {
-        //
+        if(Input::all()) {
+            $model = new Product;
+            $model->model = Input::get('model');
+            $model->name = Input::get('name');
+            $model->description = Input::get('description');
+            $model->status = Input::get('status');
+            $model->weight = Input::get('weight');
+            if($model->save()) {
+                $tmp_title_ar = Input::get('title');
+                $tmp_content_ar = Input::get('content');
+                $length = count(Input::get('tab_key'));
+                foreach(Input::get('tab_key') as $index => $key) {
+                    $model2 = new ProdTabs;
+                    $model2->tab_key = $key;
+                    $model2->title = $tmp_title_ar[$index];
+                    $model2->content = $tmp_content_ar[$index];
+                    $model2->product_id = $model->id;
+                    $model2->weight = $length - $index;
+                    $model2->save();
+                }
+            }
+        }
     }
 
     /**
@@ -58,7 +79,7 @@ class ProductController extends BaseController {
      */
     public function show($id)
     {
-        //
+        echo 'show';
     }
 
     /**

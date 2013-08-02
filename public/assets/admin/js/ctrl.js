@@ -1,17 +1,17 @@
-'use strict';
 var ctrl = angular.module('gstarApp', ['ui','ui.bootstrap','blueimp.fileupload'], function($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
-        templateUrl: 'taxonomy/taxo_list',
+        templateUrl: 'taxo_list',
         controller: 'getTaxonomyData'
     });
     $routeProvider.when('/parent/:parent_id', {
-        templateUrl: 'taxonomy/taxo_list',
+        templateUrl: 'taxo_list',
         controller: 'getTaxonomyData'
     });
 });
 
 var app_url = 'http://gstar.local/admin/product/taxonomy/';
 var url = '/upload_image';
+var tmp_ids = 0;
 
 ctrl.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
@@ -22,50 +22,54 @@ ctrl.factory('taxonomies', function(){
     return {list: []}
 });
 
-ctrl.factory('ids', function(){
-    return {ids: 0}
+// 產品設定
+ctrl.controller('product', function($scope){
+    $scope.getRandom = function(){
+        return (new Date()).getTime();
+    }
 });
 
-ctrl.controller('taxonomy', function($scope, $dialog, $route, $routeParams, $location, taxonomies, ids) {
-    // Inlined template for demo
-    var t = '<div class="modal-header">'+
-            '<h3>修改分類資料</h3>'+
-            '</div>'+
-            '<div class="modal-body">'+
-            '<p>名稱：<input ng-model="edit_name" placeholder="分類名稱" required /></p>'+
-            '</div>'+
-            '<div class="modal-footer">'+
-            '<button ng-click="close(edit_name)" class="btn btn-primary" >Close</button>'+
-            '</div>';
-    $scope.opts = {
-        backdrop: true,
-        keyboard: true,
-        backdropClick: true,
-        dialogFade: true,
-        template:  t, // OR: templateUrl: 'path/to/view.html',
-        controller: 'DialogController'
-    };
-    $scope.openDialog = function(id){
-        ids.ids = id;
-        var d = $dialog.dialog($scope.opts);
-        d.open().then(function(result){
-            if(result) {
-                alert('輸入結果為：' + result);
+ctrl.controller('tab_ctrl', function($scope){
+    $scope.tabList = [];
+    $scope.models = {};
+    $scope.content = {};
 
-            }
-        });
-    };
+    $scope.addTab = function() {
+        var key = keyGen();
+        while(angular.isDefined($scope.models[key])) {
+            key = keyGen();
+        }
+        console.log(key);
+        $scope.models[key] = '';
+        $scope.tabList.push(key);
+    }
+
+    function keyGen() {
+        return 'model-' + Math.round(Math.random() * 1000);
+    }
 });
 
-ctrl.controller('DialogController', function($scope, dialog, taxonomies, ids){
-    var obj = taxonomies.list[ids.ids];
+ctrl.controller('DialogController', function($scope, dialog, taxonomies){
+    var obj = taxonomies.list[tmp_ids];
     $scope.edit_name = obj.name;
-    $scope.close = function(result){
+    $scope.edit_id = obj.id;
+
+    $scope.dialog_close = function(result){
         dialog.close(result);
     };
+
+    $scope.save = function() {
+        $.ajax({
+            url: app_url+'edit',
+            dataType: 'json',
+            data: 'pk='+$scope.edit_id+'&value='+$scope.edit_name,
+            type: 'post'
+        });
+    }
+
 });
 
-ctrl.controller('getTaxonomyData', function($scope, $routeParams, taxonomies, ids) {
+ctrl.controller('getTaxonomyData', function($scope, $dialog, $routeParams, taxonomies) {
     $.getJSON(app_url+'getItems/'+$routeParams.parent_id, function(res){
         taxonomies.list = res.list;
         $scope.parent_name = res.parent_name;
@@ -73,6 +77,36 @@ ctrl.controller('getTaxonomyData', function($scope, $routeParams, taxonomies, id
             $scope.taxonomies = res.list;
         });
     });
+    var t = '<div class="modal-header">'+
+            '<h3>修改分類資料</h3>'+
+            '</div>'+
+            '<div class="modal-body">'+
+            '<p>名稱：<input ng-model="edit_name" placeholder="分類名稱" required /></p>'+
+            '<p><input type="hidden" name="id" ng-model="edit_id">'+
+            '<button ng-click="save()" class="btn btn-primary">儲存</button></p>'+
+            '</div>'+
+            '<div class="modal-footer">'+
+            '<button ng-click="dialog_close(edit_name)" class="btn btn-primary" >Close</button>'+
+            '</div>';
+    $scope.opts = {
+        backdrop: true,
+        keyboard: true,
+        backdropClick: true,
+        dialogFade: true,
+        template: t,
+        controller: 'DialogController'
+    };
+    $scope.openDialog = function(index){
+        tmp_ids = index;
+        $scope.d = $dialog.dialog($scope.opts);
+        $scope.d.open().then(function(result){
+            console.log(result);
+            // $scope.$apply(function () {
+                $scope.taxonomies[tmp_ids].name = result;
+            // });
+        });
+    };
+
     $scope.addTaxonomy = function() {
         var item = this.new_item;
         var parent_id = $routeParams.parent_id;
@@ -82,11 +116,58 @@ ctrl.controller('getTaxonomyData', function($scope, $routeParams, taxonomies, id
             data: 'new_item='+item+'&parent_id='+parent_id,
             type: 'post',
             success: function(res){
-                console.log(res);
                 $scope.$apply(function () {
                     $scope.taxonomies.push(res);
                 });
             }
+        });
+    }
+    $scope.deleTaxonomy = function(index) {
+        var flag = confirm('確定刪除此分類？');
+        if(flag) {
+            var obj = $scope.taxonomies[index];
+            $.ajax({
+                url: app_url+'delete',
+                dataType: 'json',
+                data: 'pk='+obj.id,
+                type: 'post',
+                success: function(){
+                    $scope.$apply(function () {
+                        $scope.taxonomies.splice(index, 1);
+                    });
+                }
+            });
+        }
+    }
+    $scope.chgStatus = function(index) {
+        var obj = $scope.taxonomies[index];
+        if(obj.status) {
+            obj.status = 0;
+        } else {
+            obj.status = 1;
+        }
+
+        $.ajax({
+            url: app_url+'updateStatus',
+            dataType: 'json',
+            data: 'pk='+obj.id+'&value='+obj.status,
+            type: 'post'
+        });
+    }
+
+    $scope.updateSort = function(){
+        ids = [];
+        var e, i, _i, _len, _ref;
+        _ref = $scope.taxonomies;
+        for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+            ids.push(_ref[i].id);
+        }
+
+        $.ajax({
+            url: app_url+'updateSort',
+            dataType: 'json',
+            data: 'ids='+ids.join(','),
+            type: 'post'
         });
     }
 });
@@ -100,7 +181,6 @@ ctrl.controller('DemoFileUploadController', ['$scope', '$http', '$filter', '$win
         $http.get(url)
             .then(
                 function (response) {
-                    console.log(response);
                     $scope.loadingFiles = false;
                     $scope.queue = response.data.files || [];
                 },
@@ -142,6 +222,34 @@ ctrl.controller('FileDestroyController', ['$scope', '$http',
     }
 ]);
 
+ctrl.directive('wysihtml', function($timeout) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ngModel) {
+            var loadWysihtml = function() {
+                angular.element(element).wysihtml5({
+                    "font-styles": true,
+                    "emphasis": true,
+                    "lists": true,
+                    "html": false,
+                    "link": true,
+                    "stylesheets": false,
+                    "image": true,
+                    "color": false,
+                    display: function(value, srcData) {
+                        ngModel.$setViewValue(value);
+                        scope.$apply();
+                    }
+                });
+            }
+            $timeout(function() {
+                loadWysihtml();
+            }, 10);
+        }
+    };
+});
+
 ctrl.directive('ibutton', function($timeout) {
     return {
         restrict: 'A',
@@ -149,6 +257,7 @@ ctrl.directive('ibutton', function($timeout) {
         link: function(scope, element, attrs, ngModel) {
             var loadIButton = function() {
                 angular.element(element).iButton({
+                    change: function(){scope.chgStatus(scope.$index)},
                     display: function(value, srcData) {
                         ngModel.$setViewValue(value);
                         scope.$apply();

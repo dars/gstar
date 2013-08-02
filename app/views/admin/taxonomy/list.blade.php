@@ -17,7 +17,7 @@
                         <td style="width: 40px">刪除</td>
                     </tr>
                 </thead>
-                <tbody ui-sortable ng-model="taxonomies">
+                <tbody ui-sortable="{update:updateSort, axis:'y'}" ng-model="taxonomies">
                     <tr class="status-info" ng-repeat="item in taxonomies">
                         <td class="icon"><i class="icon-move"></i></td>
                         <td>
@@ -26,15 +26,15 @@
                             </a>
                         </td>
                         <td>
-                            <input type="checkbox" ibutton ng-model=item.status ng-checked=item.status>
+                            <input type="checkbox" ibutton ng-model=item.status ng-checked=item.status ng-change="chgStatus($index)">
                         </td>
                         <td>
-                            <button class="btn btn-mini btn-default" ng-click="openDialog(item.id)">
+                            <button class="btn btn-mini btn-default" ng-click="openDialog($index)">
                                 <i class="icon-edit" id="edit_[[ item.id ]]"></i>
                             </button>
                         </td>
                         <td>
-                            <button class="btn btn-mini btn-danger">
+                            <button class="btn btn-mini btn-danger" type="button" ng-click="deleTaxonomy($index)">
                                 <i class="icon-remove" id="remove_[[ item.id ]]"></i>
                             </button>
                         </td>
@@ -49,6 +49,7 @@
                     <div class="span1">
                         <button type="submit" class="btn btn-blue btn-small">新增</button>
                     </div>
+                    <div ng-show="parent_name">
                     <div class="span7">
                         <!-- The fileinput-button span is used to style the file input field as button -->
                         <span class="btn btn-green fileinput-button" ng-class="{disabled: disabled}">
@@ -73,6 +74,7 @@
                         <div class="progress progress-success progress-striped active" data-file-upload-progress="progress()"><div class="bar" data-ng-style="{width: num + '%'}"></div></div>
                         <!-- The extended global progress information -->
                         <div class="progress-extended">&nbsp;</div>
+                    </div>
                     </div>
                     {{ Form::hidden('parent_id', Input::get('parent_id', 0)) }}
                 </form>

@@ -27,7 +27,7 @@ class UsersController extends \BaseController {
             } else {
                 if(Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')))) {
                     // return Redirect::intended('dashboard');
-                    return Redirect::route('product');
+                    return Redirect::route('admin.product.index');
                 }
             }
         }

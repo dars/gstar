@@ -54,7 +54,7 @@ $(function(){
 @stop
 
 @section('content')
-    <div class="container-fluid padded" ng-controller="taxonomy">
+    <div class="container-fluid padded">
         <div class="row-fluid" ng-view>
 
         </div>

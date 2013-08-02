@@ -25,7 +25,7 @@ class TaxonomyController extends BaseController
     public function getItems($parent_id = 0)
     {
         $this->layout = null;
-        $model = Taxonomy::where('parent_id', '=', $parent_id)->get();
+        $model = Taxonomy::where('parent_id', '=', $parent_id)->orderBy('weight', 'desc')->get();
         $res = new stdClass;
         $res->parent_name = '';
         $res->list = array();
@@ -86,5 +86,30 @@ class TaxonomyController extends BaseController
         $res->parent_id = $model->parent_id;
         $res->status = $model->status;
         echo json_encode($res);
+    }
+
+    // 刪除分類
+    public function delete()
+    {
+        $this->layout = null;
+        $model = Taxonomy::find(Input::get('pk'));
+        if($model) {
+            $model->delete();
+        }
+        echo '{"success": true}';
+    }
+
+    // 更新排序
+    public function updateSort()
+    {
+        $this->layout = null;
+        $ids = explode(',', Input::get('ids'));
+        $length = count($ids);
+        foreach($ids as $index => $t) {
+            $model = Taxonomy::find($t);
+            $model->weight = $length - $index;
+            $model->save();
+        }
+        echo '{"success": true}';
     }
 }

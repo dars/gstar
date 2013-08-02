@@ -16,24 +16,29 @@
 
 // Route::controllers('HomeController');
 Route::any('upload_image', array('as' => 'upload.image', 'uses' => 'Controllers\FilehandlerController@upload_image'));
+
 Route::group(array('prefix' => 'admin'), function(){
     // 使用者
     Route::group(array('prefix' => 'users'), function(){
         Route::any('login', array('as' => 'user.login', 'uses' => 'Controllers\Admin\UsersController@login'));
         Route::any('logout', array('as' => 'user.logout', 'uses' => 'Controllers\Admin\UsersController@logout'));
     });
+});
+
+Route::group(array('prefix' => 'admin', 'before'=>'auth'), function(){
     // 產品
+    Route::resource('product', 'Controllers\Admin\ProductController');
     Route::group(array('prefix' => 'product'), function(){
-        Route::get('/', array('as' => 'product', 'uses' => 'Controllers\Admin\ProductController@index'));
-        Route::get('create', array('as' => 'product.create', 'uses' => 'Controllers\Admin\ProductController@create'));
         // 分類
         Route::group(array('prefix' => 'taxonomy'), function(){
-            Route::get('/', array('as' => 'taxonomy', 'uses' => 'Controllers\Admin\TaxonomyController@index'));
+            Route::get('index', array('as' => 'taxonomy', 'uses' => 'Controllers\Admin\TaxonomyController@index'));
             Route::get('getItems/{parent_id?}', 'Controllers\Admin\TaxonomyController@getItems');
             Route::post('edit', 'Controllers\Admin\TaxonomyController@edit');
             Route::get('taxo_list', 'Controllers\Admin\TaxonomyController@taxo_list');
             Route::post('add_taxonomy', 'Controllers\Admin\TaxonomyController@add_taxonomy');
             Route::post('updateStatus', 'Controllers\Admin\TaxonomyController@updateStatus');
+            Route::post('updateSort', 'Controllers\Admin\TaxonomyController@updateSort');
+            Route::post('delete', 'Controllers\Admin\TaxonomyController@delete');
         });
     });
     Route::get('/', array('as' => 'dashboard', 'uses' => 'Controllers\Admin\DashboardController@index'));

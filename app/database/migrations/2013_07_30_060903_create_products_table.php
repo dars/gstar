@@ -14,10 +14,10 @@ class CreateProductsTable extends Migration {
 		Schema::create('products', function($table){
 			$table->increments('id')->unsugned();
 			$table->string('model');
-			$table->string('name');
+			$table->string('name')->nullable();
 			$table->integer('type')->default(1);
 			$table->integer('user_id');
-			$table->text('description');
+			$table->text('description')->nullable();
 			$table->boolean('status')->default(false);
 			$table->timestamps();
 			$table->softDeletes();

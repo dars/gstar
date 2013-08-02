@@ -78,7 +78,7 @@
 
                 <ul id="Besh9nDMaU" class="collapse ">
                     <li class="">
-                        <a href="{{ URL::route('product') }}">
+                        <a href="{{ URL::route('admin.product.index') }}">
                             <i class="icon-edit"></i> 商品資料維護
                         </a>
                     </li>

@@ -29,6 +29,21 @@
     {{ HTML::script("components/jquery-file-upload/js/jquery.fileupload-angular.js") }}
 
     {{ HTML::script('assets/admin/js/ctrl.js') }}
+
+    <script>
+    $(function(){
+        $('.content_ta').wysihtml5({
+            "font-styles": true,
+            "emphasis": true,
+            "lists": true,
+            "html": false,
+            "link": true,
+            "image": true,
+            "color": false,
+        });
+    });
+
+    </script>
 @stop
 
 @section('breadcrumbs')
@@ -62,5 +77,7 @@ $(function(){
 @stop
 
 @section('content')
-    @include('admin.product.form')
+    {{ Form::open(array('route' => array('admin.product.store'), 'class' => 'form-horizontal fill-up', 'ng-controller' => 'product')) }}
+        @include('admin.product.form')
+    {{ Form::close() }}
 @stop
