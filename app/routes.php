@@ -30,6 +30,7 @@ Route::group(array('prefix' => 'admin', 'before'=>'auth'), function(){
     Route::resource('product', 'Controllers\Admin\ProductController');
     Route::group(array('prefix' => 'product'), function(){
         Route::post('updateStatus', 'Controllers\Admin\ProductController@updateStatus');
+        Route::post('parseOldProd', 'Controllers\Admin\ProductController@parseOldProd');
         Route::get('getTabs/{prod_id}', 'Controllers\Admin\ProductController@getTabs');
         // 分類
         Route::group(array('prefix' => 'taxonomy'), function(){
@@ -54,6 +55,7 @@ Route::get('/about', array('as' => 'frontend.about', 'uses' => 'Controllers\Home
 Route::get('/contact', array('as' => 'frontend.contact', 'uses' => 'Controllers\HomeController@contact'));
 Route::get('/support', array('as' => 'frontend.support', 'uses' => 'Controllers\HomeController@support'));
 Route::get('/taxonomy/get_taxo2/{parent_id}', array('as' => 'frontend.get_taxo2', 'uses' => 'Controllers\TaxonomyController@get_taxo2'));
+Route::resource('product', 'Controllers\ProductController', array('only' => array('index', 'show')));
 Route::group(array('prefix' => 'product'), function(){
-    Route::get('/', array('as' => 'frontend.products', 'uses' => 'Controllers\ProductsController@index'));
+    Route::get('/second/{taxo_2}', array('as' => 'frontend.products.second', 'uses' => 'Controllers\ProductController@second'));
 });

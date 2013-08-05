@@ -78,3 +78,8 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+View::composer('frontend.layouts.partial.main_menu', function($view)
+{
+    $view->with('menu', Taxonomy::getMenu());
+});

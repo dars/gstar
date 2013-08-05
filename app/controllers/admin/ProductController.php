@@ -199,4 +199,50 @@ class ProductController extends BaseController {
         }
         echo json_encode($res);
     }
+
+    public function parseOldProd()
+    {
+        $this->layout = null;
+        $path = getcwd()."/oldProduct/";
+        $dir = opendir($path);
+        $files = array();
+        while(($file = readdir($dir)) !== false){
+            if(filetype($path.$file) != 'dir'){
+                $str = $file."&nbsp;";
+                $html = file_get_html("http://localhost/~Dars/gstar_html/oldProduct/".$file);
+                if($html) {
+                    $model_name = $html->find('h4', 0)->plaintext;
+                    $name = $html->find('h5', 0)->plaintext;
+                    $bread = $html->find('#breadcrumb-2', 0);
+                    $taxo1 = Taxonomy::getTaxoId($bread->children(2)->plaintext, 0);
+                    if($taxo1){
+                        $taxo2 = Taxonomy::getTaxoId($bread->children(3)->plaintext, $taxo1);
+                    } else {
+                        $taxo2 = 0;
+                    }
+                    $des = $html->find('.oldProductR', 0);
+                    $length = count($des->children());
+                    $description = '';
+                    for($i=1; $i< ($length-1); $i++) {
+                        $description .= $des->children($i);
+                    }
+                    $model = new Product;
+                    $model->model = $model_name;
+                    $model->name = $name;
+                    $model->taxonomy_id = $taxo2;
+                    $model->description = $description;
+                    $model->user_id = 1;
+                    $model->status = 1;
+                    $model->type = 2;
+                    $model->save();
+
+                    $model2 = new Image;
+                    $model2->product_id = $model->id;
+                    $model2->name = $model_name.'.jpg';
+                    $model2->save();
+                }
+            }
+        }
+        echo 'done';
+    }
 }
