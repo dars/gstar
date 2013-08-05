@@ -24,24 +24,55 @@ ctrl.factory('taxonomies', function(){
 
 // 產品設定
 ctrl.controller('product', function($scope){
-    $scope.getRandom = function(){
-        return (new Date()).getTime();
-    }
+
 });
 
 ctrl.controller('tab_ctrl', function($scope){
+    var id = $('#id').val();
+    console.log(id);
     $scope.tabList = [];
     $scope.models = {};
     $scope.content = {};
-
+    if(id != ''){
+        $.ajax({
+            url: '/admin/product/getTabs/'+id,
+            dataType: 'json',
+            success: function(data){
+                $.each(data, function(i, v){
+                    $scope.$apply(function () {
+                        $scope.models[v.tab_key] = v.title;
+                        $scope.content[v.tab_key] = v.content;
+                        $scope.tabList.push(v.tab_key);
+                    });
+                })
+            }
+        });
+    }
     $scope.addTab = function() {
         var key = keyGen();
         while(angular.isDefined($scope.models[key])) {
             key = keyGen();
         }
-        console.log(key);
+
         $scope.models[key] = '';
         $scope.tabList.push(key);
+    }
+
+    $scope.closeTab = function(tab) {
+        var flag = confirm('確定刪除此頁面？');
+        if(flag) {
+            delete $scope.models[tab];
+            delete $scope.content[content];
+            tmp_ar = $scope.tabList;
+            $scope.tabList = [];
+            $.each(tmp_ar, function(i,v){
+                if(v == tab){
+
+                } else {
+                    $scope.tabList.push(v);
+                }
+            });
+        }
     }
 
     function keyGen() {

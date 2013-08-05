@@ -21,8 +21,11 @@
 {{ HTML::script('assets/frontend/js/swipe.js') }}
 {{ HTML::script('assets/frontend/js/rotate-patch.js') }}
 {{ HTML::script('assets/frontend/js/slider.js') }}
-<!-- InstanceBeginEditable name="head" -->
-<!-- InstanceEndEditable -->
+<script>
+    $(window).load(function(){
+        var slr = $('#gstarSlider').autoSlider();
+    });
+</script>
 </head>
 
 <body>
@@ -32,15 +35,15 @@
     <div class="logo"> <a href="index.html"><img src="{{ asset('assets/frontend/images/gstar_logo.png') }}" width="148" height="66" alt="G-STAR" /></a> </div>
     <div class="headerMenu">
       <ul>
-        <li><a href="index.html">HOME</a></li>
+        <li><a href="{{ URL::route('frontend.index') }}">HOME</a></li>
         |
-        <li><a href="all_products.html">PRODUCTS</a></li>
+        <li><a href="{{ URL::route('frontend.products') }}">PRODUCTS</a></li>
         |
-        <li><a href="about.php">ABOUT</a></li>
+        <li><a href="{{ URL::route('frontend.about') }}">ABOUT</a></li>
         |
-        <li><a href="contact.php">CONTACT</a></li>
+        <li><a href="{{ URL::route('frontend.contact') }}">CONTACT</a></li>
         |
-        <li><a href="support.php">SUPPORT</a></li>
+        <li><a href="{{ URL::route('frontend.support') }}">SUPPORT</a></li>
       </ul>
     </div>
     <div id="searchwrapper">
@@ -73,82 +76,7 @@
   </div>
   <!-- InstanceEndEditable -->
   <div id="mainContent"><!-- InstanceBeginEditable name="ProductMenu" -->
-    <div id="productMenu"> <img src="{{ asset('assets/frontend/images/menu_title.gif') }}" />
-      <!-- \ mainmenu -->
-      <!-- \ 1st Menu Item -->
-      <ul class="accordion">
-        <li><a href="#">Wireless Headset</a>
-          <ul>
-            <!-- \ expanded submenu -->
-            <li><a href="products_second.html">2.4GHz RF Headset</a></li>
-            <li><a href="products_second.html">Bluetooth Headset</a></li>
-          </ul>
-        </li>
-        <!-- \ 2nd Menu Item -->
-        <li><a href="#">Stereo Headset / Headphone</a>
-          <ul>
-            <!-- \ submenu -->
-            <li><a href="products_second.html">Multimedia Headset</a></li>
-            <li><a href="products_second.html">Active Noise Cancellation Headphone</a></li>
-            <li><a href="products_second.html">Hi Fi Audio Headphone</a></li>
-            <li><a href="products_second.html">USB Stereo Headset</a></li>
-            <li><a href="products_second.html">Neckband Headset/Headphone</a></li>
-          </ul>
-        </li>
-        <!-- \ 3rd Menu Item -->
-        <li><a href="#">Gaming Headset</a>
-          <ul>
-            <!-- \ submenu -->
-            <li><a>Real 5.1ch / 7.1ch Surrounding Headset</a></li>
-            <li><a>Virtual 7.1ch Surrounding Headset</a></li>
-            <li><a>Console Gaming Headset
-              (PS3, Xbox, PC)</a></li>
-            <li><a>USB Bass Bibration / ENC/EQ Headset</a></li>
-          </ul>
-        </li>
-        <!-- \ 4th Menu Item -->
-        <li><a href="#">Earphone / Earloop</a>
-          <ul>
-            <!-- \ submenu -->
-            <li><a href="products_second.html">Smart Phone / Tablet</a></li>
-            <li><a href="products_second.html">Earbud/Earloop</a></li>
-          </ul>
-        </li>
-        <!-- \ 5th Menu Item -->
-        <li><a href="#">Accessories / Microphone</a>
-          <ul>
-            <!-- \ submenu -->
-            <li><a href="products_second.html">USB Sound Adaptor</a></li>
-            <li><a href="products_second.html">Calbe Adaptor</a></li>
-            <li><a href="products_second.html">Internet Microphone</a></li>
-          </ul>
-        </li>
-      </ul>
-      <!-- / mainmenu -->
-    </div>
-  <!-- InstanceEndEditable -->
-    <div id="ContentR"><!-- InstanceBeginEditable name="ContentR" -->
-        <div id="indexR">
-        <ul>
-            <li><img src="{{ asset('assets/frontend/images/pimg01.jpg') }}" width="180" height="204" /></li>
-            <li><img src="{{ asset('assets/frontend/images/pimg02.jpg') }}" width="180" height="204" /></li>
-            <li><img src="{{ asset('assets/frontend/images/pimg03.jpg') }}" width="180" height="204" /></li>
-            <li><img src="{{ asset('assets/frontend/images/pimg04.jpg') }}" width="180" height="204" /></li>
-            <li><img src="{{ asset('assets/frontend/images/pimg05.jpg') }}" width="180" height="204" /></li>
-            <li><img src="{{ asset('assets/frontend/images/pimg06.jpg') }}" width="180" height="204" /></li>
-        </ul>
-        </div>
-          <script type="text/javascript">
-
-      $(window).load(function(){
-
-          var slr = jQuery('#gstarSlider').autoSlider();
-
-
-      });
-
-  </script>
-    <!-- InstanceEndEditable --></div>
+    @yield('content')
   </div>
 </div>
 <div id="footer01">iPad, iPhone, iPod classic, iPod shuffle, and iPod touch are trademarks of Apple Inc., registered in the U.S. and other countries.</div>

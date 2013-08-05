@@ -7,36 +7,26 @@
         <div class="span6">
             <ul class="padded separate-sections">
                 <li class="input">
-                    {{ Form::text('model', null, array('placeholder'=>'型號')) }}
+                    {{ Form::text('model', Input::get('model', $model?$model->model:''), array('placeholder'=>'型號','required')) }}
                 </li>
                 <li class="input">
-                    {{ Form::text('name', null, array('placeholder'=>'品名')) }}
+                    {{ Form::text('name', Input::get('model', $model?$model->name:''), array('placeholder'=>'品名','required')) }}
                 </li>
                 <li class="input">
-                    {{ Form::textarea('description', null, array('placeholder'=>'說明')) }}
+                    {{ Form::textarea('description', Input::get('model', $model?$model->description:''), array('placeholder'=>'說明')) }}
                 </li>
             </ul>
         </div>
         <div class="span6">
             <ul class="padded separate-sections">
-                <li class="clearfix">
-                    <div class="span4">
-                        <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/240x240" alt="">
+                <li class="clearfix" id="thumb_block">
+                    @foreach($pix as $t)
+                    <div class="span3">
+                        <a href="javascript:void(0)" class="thumbnail" id="thumb_{{ $t }}">
+                            {{ HTML::image('upload/images/'.$t) }}
                         </a>
                     </div>
-
-                    <div class="span4">
-                        <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/240x240" alt="">
-                        </a>
-                    </div>
-
-                    <div class="span4">
-                        <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/240x240" alt="">
-                        </a>
-                    </div>
+                    @endforeach
                 </li>
                 <li class="input">
                     <div class="row-fluid">
@@ -46,6 +36,7 @@
                                 <span>新增檔案</span>
                                 <!-- The file input field used as target for the file upload widget -->
                                 <input id="fileupload" type="file" name="files[]" multiple>
+                                {{ Form::hidden('img_files', Input::get('files', $pix?join(',',$pix):''), array('id' => 'files')) }}
                             </span>
                         </div>
                         <div class="span9">
@@ -57,24 +48,15 @@
                     </div>
                 </li>
                 <li>
-                    <select name="status" class="uniform">
-                        <option value="1">上架</option>
-                        <option value="0">下架</option>
-                    </select>
+                    {{ Form::select('status', array(1=>'上架', 0=>'下架'), Input::get('status', $model?$model->status:0), array('class'=>'uniform')) }}
                 </li>
                 <li>
-                    <select name="status" class="uniform">
-                        <option value="1">類別一</option>
-                        <option value="0">類別二</option>
-                    </select>
-                    <select name="status" class="uniform">
-                        <option value="1">類別一</option>
-                        <option value="0">類別二</option>
-                    </select>
+                    {{ Form::select('taxo1', $taxo1, $taxo1_id, array('class'=>'uniform', 'id' => 'taxo1')) }}
+                    {{ Form::select('taxo2', isset($taxo2)?$taxo2:array(), Input::get('taxo2', $model?$model->taxonomy_id:''), array('class'=>'uniform', 'id' => 'taxo2')) }}
                 </li>
                 <li class="input">
-                    {{ Form::text('weight', null, array('placeholder'=>'比重', 'class' => 'span2')) }}
-                    <span class="help-block note"><i class="icon-warning-sign"></i> 數字越大越前面.</span>
+                    {{ Form::text('weight', Input::get('weight', $model?$model->weight:0), array('placeholder'=>'比重', 'class' => 'span2')) }}
+                    <span class="help-block note"><i class="icon-warning-sign"></i> 數字越大排序越前面.</span>
                 </li>
             </ul>
         </div>
@@ -107,7 +89,7 @@
                                 </div>
                                 <div style="text-align:center;">
                                     <input type="hidden" name="tab_key[]" value="[[ tab ]]">
-                                    <a href="javascript:void(0)" class="btn btn-red btn-mini" ng-click="closeTab()"><i class="icon-trash"></i> 刪除分頁</a>
+                                    <a href="javascript:void(0)" class="btn btn-red btn-mini" ng-click="closeTab(tab)"><i class="icon-trash"></i> 刪除分頁</a>
                                 </div>
                             </div>
                         </div>
@@ -118,20 +100,10 @@
     </div>
 
     <div class="form-actions">
+        {{ Form::hidden('id', Input::get('id', $model?$model->id:''), array('id' => 'id')) }}
         <button type="submit" class="btn btn-blue">儲存</button>
         <a href="{{ URL::route('admin.product.index') }}">取消</a>
     </div>
-
-    <script id="tab-template" type="text/x-handlebars-template">
-        <li>
-            <a href="#tab_tmp_random" data-toggle="tab">
-                <i class="icon-file-alt"></i> <span>[[ tmp_random ]]</span>
-            </a>
-        </li>
-    </script>
-    <script id="tab-body-template" type="text/x-handlebars-template">
-        template content
-    </script>
 @stop
 @include('admin.layouts.partial.form')
 

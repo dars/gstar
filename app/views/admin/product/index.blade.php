@@ -21,7 +21,29 @@
 
 @section('script')
 $(function(){
+    $('.status_btn').iButton({
+        'change':function(a){
+            var tmp_obj = a;
+            var pk = tmp_obj.attr('id').split('_')[1];
+            var value = (tmp_obj[0].checked)?1:0;
+            $.ajax({
+                url: "{{ url('admin/product/updateStatus') }}",
+                type: 'post',
+                data: 'pk='+pk+'&value='+value
+            });
+        }
+    });
 
+    $('.delete_btn').click(function(){
+        var pk = $(this).attr('id').split('_')[1];
+        $.ajax({
+            url: "{{ url('admin/product') }}/"+pk,
+            type: 'delete',
+            success: function(){
+                $('#datarow_'+pk).remove();
+            }
+        });
+    });
 });
 @stop
 
@@ -49,17 +71,15 @@ $(function(){
                             <table class="table table-normal">
                                 <thead>
                                     <tr>
-                                        <td style="width: 40px"></td>
                                         <td>產品型號</td>
                                         <td>產品名稱</td>
                                         <td style="width: 70px">上下架</td>
                                         <td style="width: 40px">刪除</td>
                                     </tr>
                                 </thead>
-                                <tbody ui-sortable ng-model="taxonomies">
+                                <tbody>
                                     @foreach($products as $item)
-                                    <tr class="status-info" ng-repeat="item in taxonomies">
-                                        <td class="icon"><i class="icon-move"></i></td>
+                                    <tr class="status-info" id="datarow_{{ $item['id'] }}">
                                         <td>
                                             <a href="#">
                                                 {{ $item['model'] }}
@@ -67,15 +87,15 @@ $(function(){
                                         </td>
                                         <td>
                                             <a href="#">
-                                                {{ $item['name'] }}
+                                                {{ HTML::linkRoute('admin.product.edit', $item['name'], $item['id']) }}
                                             </a>
                                         </td>
                                         <td>
-                                            <input type="checkbox" ibutton ng-model=item.status ng-checked=item.status>
+                                            {{ Form::checkbox('status_'.$item['id'], '1', $item['status'], array('id' => 'status_'.$item['id'], 'class' => 'status_btn')) }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-mini btn-danger">
-                                                <i class="icon-remove" id="remove_{{ $item['id'] }}"></i>
+                                            <button class="btn btn-mini btn-danger delete_btn" id="remove_{{ $item['id'] }}">
+                                                <i class="icon-remove"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -84,17 +104,9 @@ $(function(){
                             </table>
                             <div class="table-footer">
                                 <div class="dataTables_paginate paging_full_numbers" id="DataTables_Table_0_paginate">
-                                    <a tabindex="0" class="first paginate_button paginate_button_disabled" id="DataTables_Table_0_first">First</a>
-                                    <a tabindex="0" class="previous paginate_button paginate_button_disabled" id="DataTables_Table_0_previous">Previous</a>
-                                    <span>
-                                        <a tabindex="0" class="paginate_active">1</a>
-                                        <a tabindex="0" class="paginate_button">2</a>
-                                        <a tabindex="0" class="paginate_button">3</a>
-                                        <a tabindex="0" class="paginate_button">4</a>
-                                        <a tabindex="0" class="paginate_button">5</a>
-                                    </span>
-                                    <a tabindex="0" class="next paginate_button" id="DataTables_Table_0_next">Next</a>
-                                    <a tabindex="0" class="last paginate_button" id="DataTables_Table_0_last">Last</a>
+                                    <!-- start -->
+                                    {{ $products->links() }}
+                                    <!-- end -->
                                 </div>
                             </div>
                         </div>

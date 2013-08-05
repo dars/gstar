@@ -11,6 +11,7 @@
     <!-- Use title if it's in the page YAML frontmatter -->
     <title>@yield('pageTitle')</title>
     {{ HTML::style('assets/admin/css/application.css') }}
+    {{ HTML::style('assets/admin/css/style.css') }}
 
     <!--[if lt IE 9]>
     {{ HTML::script('components/html5shiv/src/html5shiv.js') }}
@@ -60,14 +61,7 @@
     <div class="primary-sidebar">
         <!-- Main nav -->
         <ul class="nav nav-collapse collapse nav-collapse-primary">
-            <li class="active">
-                <span class="glow"></span>
-                <a href="#">
-                    <i class="icon-dashboard icon-2x"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="dark-nav">
+            <li class="dark-nav" class="active">
                 <span class="glow"></span>
                 <a class="accordion-toggle collapsed " data-toggle="collapse" href="#Besh9nDMaU">
                     <i class="icon-headphones icon-2x"></i>

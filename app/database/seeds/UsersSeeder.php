@@ -12,6 +12,20 @@ class UsersSeeder extends Seeder
             'created_at' => $date->modify('-1 day +1 hour'),
             'updated_at' => $date->modify('-1 day +1 hour'),
         );
+        $user[] = array(
+            'username'    => 'user1@djstudio.biz',
+            'password' => Hash::make('password1'),
+            'status' => true,
+            'created_at' => $date->modify('-1 day +1 hour'),
+            'updated_at' => $date->modify('-1 day +1 hour'),
+        );
+        $user[] = array(
+            'username'    => 'user2@djstudio.biz',
+            'password' => Hash::make('password2'),
+            'status' => true,
+            'created_at' => $date->modify('-1 day +1 hour'),
+            'updated_at' => $date->modify('-1 day +1 hour'),
+        );
 
 
         // Delete all the posts comments
