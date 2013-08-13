@@ -16,6 +16,7 @@
 
 // Route::controllers('HomeController');
 Route::any('upload_image', array('as' => 'upload.image', 'uses' => 'Controllers\FilehandlerController@upload_image'));
+Route::any('uploadhandler', array('uses' => 'Libraries\UploadHandler@UploadHandler'));
 
 Route::group(array('prefix' => 'admin'), function(){
     // 使用者

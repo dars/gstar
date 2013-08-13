@@ -42,39 +42,32 @@
                 </tbody>
             </table>
             <div class="form-actions">
-                <form action='' class='fill-up' enctype="multipart/form-data" ng-submit='addTaxonomy()' data-ng-controller="DemoFileUploadController" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
-                    <div class="span10">
+                <form action='' class='fill-up' method="post" ng-submit='addTaxonomy()'>
+                    <div class="span11">
                         <input type="text" placeholder="分類名稱" ng-model='new_item' required>
                     </div>
                     <div class="span1">
-                        <button type="submit" class="btn btn-blue btn-small">新增</button>
+                        <button type="submit" class="btn btn-blue btn-small"><nobr>新增</nobr></button>
                     </div>
-                    <div ng-show="parent_name">
-                    <div class="span7">
-                        <!-- The fileinput-button span is used to style the file input field as button -->
-                        <span class="btn btn-green fileinput-button" ng-class="{disabled: disabled}">
-                            <i class="icon-plus icon-white"></i>
-                            <span>新增檔案...</span>
-                            <input type="file" name="files[]" multiple ng-disabled="disabled">
-                        </span>
-                        <button type="button" class="btn btn-lightblue start" data-ng-click="submit()">
-                            <i class="icon-upload icon-white"></i>
-                            <span>上傳</span>
-                        </button>
-                        <button type="button" class="btn btn-gray cancel" data-ng-click="cancel()">
-                            <i class="icon-ban-circle icon-white"></i>
-                            <span>取消</span>
-                        </button>
-                        <!-- The loading indicator is shown during file processing -->
-                        <div class="fileupload-loading"></div>
-                    </div>
-                    <!-- The global progress information -->
-                    <div class="span5 fade" data-ng-class="{in: active()}">
-                        <!-- The global progress bar -->
-                        <div class="progress progress-success progress-striped active" data-file-upload-progress="progress()"><div class="bar" data-ng-style="{width: num + '%'}"></div></div>
-                        <!-- The extended global progress information -->
-                        <div class="progress-extended">&nbsp;</div>
-                    </div>
+                    <div ng-show="parent_name" style="clear:both;">
+                        <div class="span3">
+                            <img src="http://placehold.it/207x73" id="tmp_upload_img" style="width:207px;height:73.31px;">
+                        </div>
+                        <div class="span2">
+                            <span class="btn btn-black fileinput-button">
+                                <i class="icon-plus icon-white"></i>
+                                <span>新增檔案</span>
+                                <!-- The file input field used as target for the file upload widget -->
+                                <input id="fileupload" type="file" name="files[]" multiple>
+                                {{ Form::hidden('img_files', null, array('id' => 'files')) }}
+                            </span>
+                        </div>
+                        <div class="span5" style="padding-top:10px">
+                            <!-- The global progress bar -->
+                            <div id="progress" class="progress progress-success progress-striped">
+                                <div class="bar"></div>
+                            </div>
+                        </div>
                     </div>
                     {{ Form::hidden('parent_id', Input::get('parent_id', 0)) }}
                 </form>

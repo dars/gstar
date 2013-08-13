@@ -29,7 +29,7 @@ ctrl.controller('product', function($scope){
 
 ctrl.controller('tab_ctrl', function($scope){
     var id = $('#id').val();
-    console.log(id);
+
     $scope.tabList = [];
     $scope.models = {};
     $scope.content = {};
@@ -108,6 +108,23 @@ ctrl.controller('getTaxonomyData', function($scope, $dialog, $routeParams, taxon
             $scope.taxonomies = res.list;
         });
     });
+    $('#fileupload').fileupload({
+        url: '/libraries/index.php',
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('#files').val(file.name);
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    });
+
     var t = '<div class="modal-header">'+
             '<h3>修改分類資料</h3>'+
             '</div>'+
@@ -127,6 +144,7 @@ ctrl.controller('getTaxonomyData', function($scope, $dialog, $routeParams, taxon
         template: t,
         controller: 'DialogController'
     };
+
     $scope.openDialog = function(index){
         tmp_ids = index;
         $scope.d = $dialog.dialog($scope.opts);
@@ -260,14 +278,13 @@ ctrl.directive('wysihtml', function($timeout) {
         link: function(scope, element, attrs, ngModel) {
             var loadWysihtml = function() {
                 angular.element(element).wysihtml5({
-                    "font-styles": true,
+                    "font-styles": false,
                     "emphasis": true,
                     "lists": true,
-                    "html": false,
+                    "html": true,
                     "link": true,
-                    "stylesheets": false,
                     "image": true,
-                    "color": false,
+                    "color": true,
                     display: function(value, srcData) {
                         ngModel.$setViewValue(value);
                         scope.$apply();

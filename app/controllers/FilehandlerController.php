@@ -13,6 +13,7 @@ class FilehandlerController extends BaseController {
         if($files){
             $res = array('files' => array());
             foreach($files as $index => $file){
+                echo 'f';
                 $destinationPath = 'upload/images/';
                 $filename = $file->getClientOriginalName();
                 $extension =$file->getClientOriginalExtension(); //if you need extension of the file
@@ -25,6 +26,8 @@ class FilehandlerController extends BaseController {
             } else {
                 return Response::json('error', 400);
             }
+        } else {
+            echo 'no files uploaded.';
         }
     }
 }
