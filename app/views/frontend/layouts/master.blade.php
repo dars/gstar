@@ -14,6 +14,7 @@
 {{ HTML::style('assets/frontend/css/font-awesome.min.css') }}
 <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
 {{ HTML::style('assets/frontend/css/slider.css') }}
+{{ HTML::style('assets/wysiwyg-color.css') }}
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="icon" type="image/gif" href="animated_favicon1.gif">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -23,6 +24,7 @@
 {{ HTML::script('assets/frontend/js/slider.js') }}
 {{ HTML::script('assets/frontend/js/jquery.hashchange.min.js') }}
 {{ HTML::script('assets/frontend/js/jquery.easytabs.min.js') }}
+{{ HTML::script('assets/frontend/js/jquery-ui.min.js') }}
 <script>
 $(window).load(function(){
     var slr = $('#gstarSlider').autoSlider();
@@ -35,7 +37,7 @@ $(window).load(function(){
 <div id="leftHeader"></div>
 <div id="mainWrap">
     <div class="header">
-        <div class="logo"> <a href="index.html"><img src="{{ asset('assets/frontend/images/gstar_logo.png') }}" width="148" height="66" alt="G-STAR" /></a> </div>
+        <div class="logo"> <a href="{{ URL::route('frontend.index') }}"><img src="{{ asset('assets/frontend/images/gstar_logo.png') }}" width="148" height="66" alt="G-STAR" /></a> </div>
         <div class="headerMenu">
             <ul>
                 <li><a href="{{ URL::route('frontend.index') }}">HOME</a></li>
@@ -50,9 +52,9 @@ $(window).load(function(){
             </ul>
         </div>
         <div id="searchwrapper">
-            <form action="">
-                <input type="text" class="searchbox" name="s" value="Product Search" />
-                <input type="image" src="{{ asset('assets/frontend/images/search_icon.png') }}" class="searchbox_submit" value="" />
+            <form action="{{ URL::route('frontend.products.search') }}" method="get">
+                <input type="text" class="searchbox" name="keyword" placeholder="Product Search" value="{{ Input::get('keyword','') }}" />
+                <input type="image" src="{{ asset('assets/frontend/images/search_icon.png') }}" class="searchbox_submit" />
             </form>
         </div>
     </div>

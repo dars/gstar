@@ -42,6 +42,7 @@ class ProductController extends BaseController {
             'name' => '商品資料維護',
             'icon_set' => 'icon-edit'
         ));
+        $data['taxo1'] = Taxonomy::getTaxo1();
         $this->layout->nest('content', 'admin.product.create', $data);
     }
 
@@ -64,25 +65,29 @@ class ProductController extends BaseController {
                 $tmp_title_ar = Input::get('tab_title');
                 $tmp_content_ar = Input::get('tab_content');
                 $length = count(Input::get('tab_key'));
-                foreach(Input::get('tab_key') as $index => $key) {
-                    $model2 = new Tab;
-                    $model2->tab_key = $key;
-                    $model2->title = $tmp_title_ar[$index];
-                    $model2->content = $tmp_content_ar[$index];
-                    $model2->product_id = $model->id;
-                    $model2->weight = $length - $index;
-                    $model2->save();
-                }
-                $imgs = expolde(',', Input::get('img_files'));
-                foreach($imgs as $t){
-                    $model3 = new Image;
-                    $model3->product_id = $model->id;
-                    $model3->name = $t;
-                    $model3->save();
+                if(Input::get('tab_key')){
+                    foreach(Input::get('tab_key') as $index => $key) {
+                        $model2 = new Tab;
+                        $model2->tab_key = $key;
+                        $model2->title = $tmp_title_ar[$index];
+                        $model2->content = $tmp_content_ar[$index];
+                        $model2->product_id = $model->id;
+                        $model2->weight = $length - $index;
+                        $model2->save();
+                    }
+                    $imgs = expolde(',', Input::get('img_files'));
+                    if(isset($imgs)){
+                        foreach($imgs as $t){
+                            $model3 = new Image;
+                            $model3->product_id = $model->id;
+                            $model3->name = $t;
+                            $model3->save();
+                        }
+                    }
                 }
             }
         }
-        return Redirect::route('admin.product');
+        return Redirect::route('admin.product.index');
     }
 
     /**
@@ -133,23 +138,28 @@ class ProductController extends BaseController {
                     $tmp_title_ar = Input::get('tab_title');
                     $tmp_content_ar = Input::get('tab_content');
                     $length = count(Input::get('tab_key'));
-                    foreach(Input::get('tab_key') as $index => $key) {
-
-                        $model2 = new Tab;
-                        $model2->tab_key = $key;
-                        $model2->title = $tmp_title_ar[$index];
-                        $model2->content = $tmp_content_ar[$index];
-                        $model2->product_id = $model->id;
-                        $model2->weight = $length - $index;
-                        //$model2->save();
-                    }
-                    $imgs = explode(',', Input::get('img_files'));
-                    foreach($imgs as $t){
-                        if($t != ''){
-                            $model3 = new Image;
-                            $model3->product_id = $model->id;
-                            $model3->name = $t;
-                            $model3->save();
+                    if(Input::get('tab_key')){
+                        Tab::where('product_id', '=', $id)->delete();
+                        foreach(Input::get('tab_key') as $index => $key) {
+                            $model2 = new Tab;
+                            $model2->tab_key = $key;
+                            $model2->title = $tmp_title_ar[$index];
+                            $model2->content = $tmp_content_ar[$index];
+                            $model2->product_id = $model->id;
+                            $model2->weight = $length - $index;
+                            $model2->save();
+                        }
+                        $imgs = explode(',', Input::get('img_files'));
+                        Image::where('product_id', '=', $id)->delete();
+                        if($imgs) {
+                            foreach($imgs as $t){
+                                if($t != ''){
+                                    $model3 = new Image;
+                                    $model3->product_id = $model->id;
+                                    $model3->name = $t;
+                                    $model3->save();
+                                }
+                            }
                         }
                     }
                 }

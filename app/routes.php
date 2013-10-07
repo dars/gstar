@@ -53,10 +53,15 @@ Route::group(array('prefix' => 'admin', 'before'=>'auth'), function(){
 
 Route::get('/', array('as' => 'frontend.index', 'uses' => 'Controllers\HomeController@index'));
 Route::get('/about', array('as' => 'frontend.about', 'uses' => 'Controllers\HomeController@about'));
+Route::get('/about2', array('as' => 'frontend.about2', 'uses' => 'Controllers\HomeController@about2'));
+Route::get('/about3', array('as' => 'frontend.about3', 'uses' => 'Controllers\HomeController@about3'));
 Route::get('/contact', array('as' => 'frontend.contact', 'uses' => 'Controllers\HomeController@contact'));
 Route::get('/support', array('as' => 'frontend.support', 'uses' => 'Controllers\HomeController@support'));
 Route::get('/taxonomy/get_taxo2/{parent_id}', array('as' => 'frontend.get_taxo2', 'uses' => 'Controllers\TaxonomyController@get_taxo2'));
-Route::resource('product', 'Controllers\ProductController', array('only' => array('index', 'show')));
+
 Route::group(array('prefix' => 'product'), function(){
     Route::get('/second/{taxo_2}', array('as' => 'frontend.products.second', 'uses' => 'Controllers\ProductController@second'));
+    Route::get('/inquiry', array('as' => 'frontend.products.inquiry', 'uses' => 'Controllers\ProductController@inquiry'));
+    Route::any('/search', array('as' => 'frontend.products.search', 'uses' => 'Controllers\ProductController@search'));
 });
+Route::resource('product', 'Controllers\ProductController', array('only' => array('index', 'show')));

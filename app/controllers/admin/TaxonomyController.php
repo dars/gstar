@@ -49,6 +49,7 @@ class TaxonomyController extends BaseController
             $model->name = Input::get('value');
             $model->save();
         }
+        echo '{"success": true}';
     }
 
     // 更新狀態
@@ -76,9 +77,11 @@ class TaxonomyController extends BaseController
         $model = new Taxonomy;
         $model->name = Input::get('new_item');
         $model->parent_id = (int)Input::get('parent_id');
+        $model->image = Input::get('files');
         $model->user_id = 1;
         $model->status = 1;
         $model->save();
+
         $res = new stdClass();
         $res->success = true;
         $res->id = $model->id;

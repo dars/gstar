@@ -1,7 +1,36 @@
 @section('script')
 <script>
 $(function(){
+    $('#big_image').hide();
     $('#tab-container').easytabs();
+    $('#big_image').draggable({
+        drag: function(){
+            var top = parseInt($(this).css('top'));
+        },
+        stop: function(){
+            canvas_width = $('#pBig').width();
+            canvas_height = $('#pBig').height();
+            img_width = $(this).width();
+            img_height = $(this).height();
+            var top = parseInt($(this).css('top'));
+            if(top > 0) {
+                $(this).css('top', 0);
+            }
+            if(top < (canvas_height-img_height+10)) {
+                $(this).css('top', (canvas_height-img_height+10)+'px');
+            }
+            var left = parseInt($(this).css('left'));
+            if(left > 0) {
+                $(this).css('left', 0);
+            }
+            if(left < (canvas_width-img_width)) {
+                $(this).css('left', (canvas_width-img_width)+'px');
+            }
+        }
+    });
+    $('#show_big_btn').click(function(){
+        $('#big_image').toggle();
+    });
 });
 </script>
 @stop
@@ -13,22 +42,26 @@ $(function(){
 @section('breadcrumb')
     <ul id="breadcrumb-2">
         <li><a href="{{ URL::route('frontend.index') }}" title="Home">Home</a></li>
-        <li><a href="#" title="Products">Products</a></li>
-        <li><a href="#" title="{{ $taxo1 }}">{{ $taxo1 }}</a></li>
-        <li><a href="#" title="{{ $taxo2 }}">{{ $taxo2 }}</a></li>
+        <li><a href="{{ URL::route('product.index') }}" title="Products">Products</a></li>
+        <li><a href="{{ URL::route('product.index') }}" title="{{ $taxo1 }}">{{ $taxo1 }}</a></li>
+        <li><a href="{{ URL::route('frontend.products.second', $model['taxonomy_id']) }}" title="{{ $taxo2 }}">{{ $taxo2 }}</a></li>
         <li class="current">{{ $model['model'] }}</li>
     </ul>
 @stop
 
 @section('content')
-<div id="productMainContent"><!-- InstanceBeginEditable name="productsMainContent" -->
-    <div class="pBig">
+<div id="productMainContent">
+    <div class="pBig" id="pBig" style="overflow:hidden;">
         @if($pix)
+            <div id="big_image" style="position:absolute;">
+                {{ HTML::image('upload/images/'.$pix[0]['name']) }}
+            </div>
             {{ HTML::image('upload/images/'.$pix[0]['name'], '', array('width'=>400, 'height'=>400)) }}
+            <div class="imgZoom"><a href="javascript:void(0)" id="show_big_btn">{{ HTML::image('assets/frontend/images/zoom.gif') }}</a></div>
         @else
             <img src="http://placehold.it/400x400&text=COMING SOON">
         @endif
-        <div class="imgZoom"><a href="#">{{ HTML::image('assets/frontend/images/zoom.gif') }}</a></div>
+
     </div>
     <div class="productDetailR">
         <span class="productStyle01">{{ $taxo1 }}</span>
@@ -67,7 +100,7 @@ $(function(){
     </div>
     <div class="inquiry">
         <ul>
-            <li><a href="inquiry.html">Inquiry</a></li>
+            <li><a href="{{ URL::route('frontend.products.inquiry') }}">Inquiry</a></li>
         </ul>
     </div>
 </div>

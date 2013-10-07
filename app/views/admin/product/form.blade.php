@@ -7,26 +7,28 @@
         <div class="span6">
             <ul class="padded separate-sections">
                 <li class="input">
-                    {{ Form::text('model', Input::get('model', $model?$model->model:''), array('placeholder'=>'型號','required')) }}
+                    {{ Form::text('model', Input::get('model', @$model?$model->model:''), array('placeholder'=>'型號','required')) }}
                 </li>
                 <li class="input">
-                    {{ Form::text('name', Input::get('model', $model?$model->name:''), array('placeholder'=>'品名','required')) }}
+                    {{ Form::text('name', Input::get('model', @$model?$model->name:''), array('placeholder'=>'品名','required')) }}
                 </li>
-                <li class="input">
-                    {{ Form::textarea('description', Input::get('model', $model?$model->description:''), array('placeholder'=>'說明')) }}
+                <li class="input description">
+                    {{ Form::textarea('description', Input::get('model', @$model?$model->description:''), array('placeholder'=>'說明', 'id'=>'description')) }}
                 </li>
             </ul>
         </div>
         <div class="span6">
             <ul class="padded separate-sections">
                 <li class="clearfix" id="thumb_block">
-                    @foreach($pix as $t)
-                    <div class="span3">
-                        <a href="javascript:void(0)" class="thumbnail" id="thumb_{{ $t }}">
-                            {{ HTML::image('upload/images/'.$t) }}
-                        </a>
-                    </div>
-                    @endforeach
+                    @if(@$pix)
+                        @foreach($pix as $t)
+                        <div class="span3">
+                            <a href="javascript:void(0)" class="thumbnail" id="thumb_{{ $t }}">
+                                {{ HTML::image('upload/images/'.$t) }}
+                            </a>
+                        </div>
+                        @endforeach
+                    @endif
                 </li>
                 <li class="input">
                     <div class="row-fluid">
@@ -36,7 +38,7 @@
                                 <span>新增檔案</span>
                                 <!-- The file input field used as target for the file upload widget -->
                                 <input id="fileupload" type="file" name="files[]" multiple>
-                                {{ Form::hidden('img_files', Input::get('files', $pix?join(',',$pix):''), array('id' => 'files')) }}
+                                {{ Form::hidden('img_files', Input::get('files', @$pix?join(',',$pix):''), array('id' => 'files')) }}
                             </span>
                         </div>
                         <div class="span9">
@@ -48,18 +50,19 @@
                     </div>
                 </li>
                 <li>
-                    {{ Form::select('status', array(1=>'上架', 0=>'下架'), Input::get('status', $model?$model->status:0), array('class'=>'uniform')) }}
+                    {{ Form::select('status', array(1=>'上架', 0=>'下架'), Input::get('status', @$model?$model->status:0), array('class'=>'uniform')) }}
                 </li>
                 <li>
-                    {{ Form::select('taxo1', $taxo1, $taxo1_id, array('class'=>'uniform', 'id' => 'taxo1')) }}
-                    {{ Form::select('taxo2', isset($taxo2)?$taxo2:array(), Input::get('taxo2', $model?$model->taxonomy_id:''), array('class'=>'uniform', 'id' => 'taxo2')) }}
+                    {{ Form::select('taxo1', $taxo1, isset($taxo1_id)?$taxo1_id:'', array('class'=>'uniform', 'id' => 'taxo1', 'required')) }}
+                    {{ Form::select('taxo2', isset($taxo2)?$taxo2:array(), Input::get('taxo2', @$model?$model->taxonomy_id:''), array('class'=>'uniform', 'id' => 'taxo2', 'required')) }}
                 </li>
                 <li class="input">
-                    {{ Form::text('weight', Input::get('weight', $model?$model->weight:0), array('placeholder'=>'比重', 'class' => 'span2')) }}
+                    {{ Form::text('weight', Input::get('weight', @$model?$model->weight:0), array('placeholder'=>'比重', 'class' => 'span2')) }}
                     <span class="help-block note"><i class="icon-warning-sign"></i> 數字越大排序越前面.</span>
                 </li>
             </ul>
         </div>
+        @if(!isset($model) || $model->type == 1)
         <div class="row-fluid" ng-controller="tab_ctrl">
             <div class="span12 padded">
                 <div class="box">
@@ -97,10 +100,11 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 
     <div class="form-actions">
-        {{ Form::hidden('id', Input::get('id', $model?$model->id:''), array('id' => 'id')) }}
+        {{ Form::hidden('id', Input::get('id', @$model?$model->id:''), array('id' => 'id')) }}
         <button type="submit" class="btn btn-blue">儲存</button>
         <a href="{{ URL::route('admin.product.index') }}">取消</a>
     </div>

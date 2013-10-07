@@ -84,13 +84,13 @@
                 </ul>
             </li>
 
-            <li class="">
+            <!-- li class="">
                 <span class="glow"></span>
                 <a href="#">
                     <i class="icon-user icon-2x"></i>
                     <span>管理帳號設定</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
     @endif

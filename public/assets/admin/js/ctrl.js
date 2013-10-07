@@ -9,7 +9,7 @@ var ctrl = angular.module('gstarApp', ['ui','ui.bootstrap','blueimp.fileupload']
     });
 });
 
-var app_url = 'http://gstar.local/admin/product/taxonomy/';
+var app_url = '/admin/product/taxonomy/';
 var url = '/upload_image';
 var tmp_ids = 0;
 
@@ -84,9 +84,10 @@ ctrl.controller('DialogController', function($scope, dialog, taxonomies){
     var obj = taxonomies.list[tmp_ids];
     $scope.edit_name = obj.name;
     $scope.edit_id = obj.id;
-
+    $scope.edit_image = obj.image;
+    console.log(obj.image);
     $scope.dialog_close = function(result){
-        dialog.close(result);
+        dialog.close();
     };
 
     $scope.save = function() {
@@ -94,7 +95,10 @@ ctrl.controller('DialogController', function($scope, dialog, taxonomies){
             url: app_url+'edit',
             dataType: 'json',
             data: 'pk='+$scope.edit_id+'&value='+$scope.edit_name,
-            type: 'post'
+            type: 'post',
+            success: function(){
+                dialog.close($scope.edit_name);
+            }
         });
     }
 
@@ -114,6 +118,7 @@ ctrl.controller('getTaxonomyData', function($scope, $dialog, $routeParams, taxon
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
                 $('#files').val(file.name);
+                $('#tmp_upload_img').attr('src', '/upload/images/'+file.name);
             });
         },
         progressall: function (e, data) {
@@ -129,6 +134,17 @@ ctrl.controller('getTaxonomyData', function($scope, $dialog, $routeParams, taxon
             '<h3>修改分類資料</h3>'+
             '</div>'+
             '<div class="modal-body">'+
+            '<img src="http://placehold.it/207x73" id="tmp_edit_upload_img" ng-hide="edit_image" style="width:207px;height:73.31px;margin-bottom:10px;">'+
+            '<img src="/upload/images/[[ edit_image ]]" id="tmp_edit_upload_img" ng-show="edit_image" style="width:207px;height:73.31px;margin-bottom:10px;">'+
+            '<span class="btn btn-black fileinput-button">'+
+            '<i class="icon-plus icon-white"></i>'+
+            '<span>新增檔案</span>'+
+            '<input id="fileupload" type="file" name="files[]">'+
+            '<input id="files" ng-model="img_file" type="hidden" name="img_files">'+
+            '</span>'+
+            '<div id="progress" class="progress progress-success progress-striped" style="margin-top:15px">'+
+            '<div class="bar"></div>'+
+            '</div>'+
             '<p>名稱：<input ng-model="edit_name" placeholder="分類名稱" required /></p>'+
             '<p><input type="hidden" name="id" ng-model="edit_id">'+
             '<button ng-click="save()" class="btn btn-primary">儲存</button></p>'+
@@ -149,20 +165,21 @@ ctrl.controller('getTaxonomyData', function($scope, $dialog, $routeParams, taxon
         tmp_ids = index;
         $scope.d = $dialog.dialog($scope.opts);
         $scope.d.open().then(function(result){
-            console.log(result);
-            // $scope.$apply(function () {
+            if (typeof result != 'undefined') {
+                console.log(result);
                 $scope.taxonomies[tmp_ids].name = result;
-            // });
+            };
         });
     };
 
     $scope.addTaxonomy = function() {
         var item = this.new_item;
+        var files = $('#files').val();
         var parent_id = $routeParams.parent_id;
         $.ajax({
             url: app_url+'add_taxonomy',
             dataType: 'json',
-            data: 'new_item='+item+'&parent_id='+parent_id,
+            data: 'new_item='+item+'&parent_id='+parent_id+'&files='+files,
             type: 'post',
             success: function(res){
                 $scope.$apply(function () {
@@ -278,12 +295,13 @@ ctrl.directive('wysihtml', function($timeout) {
         link: function(scope, element, attrs, ngModel) {
             var loadWysihtml = function() {
                 angular.element(element).wysihtml5({
-                    "font-styles": false,
+                    "font-styles": true,
                     "emphasis": true,
                     "lists": true,
                     "html": true,
                     "link": true,
                     "image": true,
+                    "stylesheets": ["/assets/wysiwyg-color.css"],
                     "color": true,
                     display: function(value, srcData) {
                         ngModel.$setViewValue(value);
@@ -318,23 +336,3 @@ ctrl.directive('ibutton', function($timeout) {
         }
     };
 });
-
-// ctrl.directive('xeditable', function($timeout) {
-//     return {
-//         restrict: 'A',
-//         require: 'ngModel',
-//         link: function(scope, element, attrs, ngModel) {
-//             var loadXeditable = function() {
-//                 angular.element(element).editable({
-//                     display: function(value, srcData) {
-//                         ngModel.$setViewValue(value);
-//                         scope.$apply();
-//                     }
-//                 });
-//             }
-//             $timeout(function() {
-//                 loadXeditable();
-//             }, 10);
-//         }
-//     };
-// });

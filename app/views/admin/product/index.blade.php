@@ -63,11 +63,11 @@ $(function(){
                     </div>
                     <div class="box-content">
                         <div class="dataTables_wrapper form-inline" role="grid">
-                            <div class="table-header">
+                            <!-- <div class="table-header">
                                 <div class="dataTables_filter" id="DataTables_Table_0_filter">
                                     <label>Search: <input type="text" aria-controls="DataTables_Table_0"></label>
                                 </div>
-                            </div>
+                            </div> -->
                             <table class="table table-normal">
                                 <thead>
                                     <tr>
@@ -82,6 +82,9 @@ $(function(){
                                     <tr class="status-info" id="datarow_{{ $item['id'] }}">
                                         <td>
                                             <a href="#">
+                                                @if($item['type'] == 2)
+                                                    <span class="label label-green">舊</span>
+                                                @endif
                                                 {{ $item['model'] }}
                                             </a>
                                         </td>

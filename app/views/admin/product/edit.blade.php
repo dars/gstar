@@ -37,18 +37,34 @@
 
 @section('script')
 $(function(){
+    @if($model->type == 1)
     $('.content_ta').wysihtml5({
         "font-styles": true,
         "emphasis": true,
         "lists": true,
-        "html": false,
+        "html": true,
         "link": true,
         "image": true,
-        "color": false,
+        "stylesheets": ["/assets/wysiwyg-color.css"],
+        "color": true
     });
+    @else
+    $('#description').wysihtml5({
+        "font-styles": true,
+        "emphasis": true,
+        "lists": true,
+        "html": true,
+        "link": true,
+        "image": true,
+        "stylesheets": ["/assets/wysiwyg-color.css"],
+        "color": true
+    });
+    $('.description').css('border', '1px #CCC solid');
+    @endif
+
     $.uniform.restore("input[type=file]");
     $('#fileupload').fileupload({
-        url: '{{ URL::route('upload.image') }}',
+        url: '/libraries/index.php',
         dataType: 'json',
         done: function (e, data) {
             var files_str = $('#files').val();
@@ -118,7 +134,7 @@ $(function(){
 @stop
 
 @section('content')
-    {{ Form::open(array('route' => array('admin.product.update', $id), 'method' => 'put', 'class' => 'form-horizontal fill-up', 'ng-controller' => 'product')) }}
+    {{ Form::model($model, array('route' => array('admin.product.update', $id), 'method' => 'put', 'class' => 'form-horizontal fill-up', 'ng-controller' => 'product')) }}
         @include('admin.product.form', array('model' => $model,'taxo1' => $taxo1, 'taxo2' => $taxo2, 'taxo1_id' => $taxo1_id, 'pix' => $pix))
     {{ Form::close() }}
 @stop
