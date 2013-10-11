@@ -1,5 +1,11 @@
 <?php
 namespace Controllers\Admin;
+use Cartalyst\Sentry\Users\LoginRequiredException;
+use Cartalyst\Sentry\Users\PasswordRequiredException;
+use Cartalyst\Sentry\Users\WrongPasswordException;
+use Cartalyst\Sentry\Users\UserExistsException;
+use Cartalyst\Sentry\Users\UserNotFoundException;
+use Cartalyst\Sentry\Throttling\UserSuspendedException;
 use BaseController;
 use View;
 use Taxonomy;
@@ -9,6 +15,7 @@ use Response;
 use Validator;
 use Redirect;
 use Auth;
+use Sentry;
 
 class UsersController extends \BaseController {
     protected $layout = 'admin.layouts.master';
@@ -16,18 +23,34 @@ class UsersController extends \BaseController {
     {
         if(Input::all()) {
             $rules = array(
-                'username' => 'required',
+                'email' => 'required',
                 'password' => 'required|between:6,50',
             );
             // Create a new validator instance from our validation rules
             $validator = Validator::make(Input::all(), $rules);
             if($validator->fails()) {
-                // Ooops.. something went wrong
                 return Redirect::back()->withInput()->withErrors($validator);
             } else {
-                if(Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password')))) {
-                    // return Redirect::intended('dashboard');
+                try {
+                    $credentials = array(
+                        'email'    => Input::get('email'),
+                        'password' => Input::get('password')
+                    );
+                    $user = Sentry::authenticate($credentials, false);
+                    var_dump($user);
                     return Redirect::route('admin.product.index');
+                } catch (LoginRequiredException $e) {
+                    return Redirect::back()->withInput()->withErrors($validator);
+                } catch (PasswordRequiredException $e) {
+                    return Redirect::back()->withInput()->withErrors($validator);
+                } catch (WrongPasswordException $e) {
+                    return Redirect::back()->withInput()->withErrors($validator);
+                } catch (UserNotFoundException $e) {
+                    return Redirect::back()->withInput()->withErrors($validator);
+                } catch (UserNotActivatedException $e) {
+                    return Redirect::back()->withInput()->withErrors($validator);
+                } catch (UserSuspendedException $e) {
+                    return Redirect::back()->withInput()->withErrors($validator);
                 }
             }
         }
@@ -36,7 +59,7 @@ class UsersController extends \BaseController {
 
     public function logout()
     {
-        Auth::logout();
+        Sentry::logout();
         return Redirect::route('user.login');
     }
     /**
@@ -56,7 +79,15 @@ class UsersController extends \BaseController {
      */
     public function create()
     {
-        //
+        $group = Sentry::createGroup(array(
+            'name' => 'Admin'
+        ));
+        $user = Sentry::createUser(array(
+            'email'    => 'admin@djstudio.biz',
+            'password' => 'password'
+        ));
+        $adminGroup = Sentry::findGroupById(1);
+        $user->addGroup($adminGroup);
     }
 
     /**

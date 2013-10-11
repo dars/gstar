@@ -81,17 +81,13 @@ $(function(){
                                     @foreach($products as $item)
                                     <tr class="status-info" id="datarow_{{ $item['id'] }}">
                                         <td>
-                                            <a href="#">
-                                                @if($item['type'] == 2)
-                                                    <span class="label label-green">舊</span>
-                                                @endif
-                                                {{ $item['model'] }}
-                                            </a>
+                                            @if($item['type'] == 2)
+                                                <span class="label label-green">舊</span>
+                                            @endif
+                                            {{ HTML::linkRoute('admin.product.edit', $item['model'], $item['id']) }}
                                         </td>
                                         <td>
-                                            <a href="#">
-                                                {{ HTML::linkRoute('admin.product.edit', $item['name'], $item['id']) }}
-                                            </a>
+                                            {{ HTML::linkRoute('admin.product.edit', $item['name'], $item['id']) }}
                                         </td>
                                         <td>
                                             {{ Form::checkbox('status_'.$item['id'], '1', $item['status'], array('id' => 'status_'.$item['id'], 'class' => 'status_btn')) }}

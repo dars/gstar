@@ -6,18 +6,40 @@ use Taxonomy;
 use Input;
 use stdClass;
 use Response;
+use Redirect;
 
 class TaxonomyController extends BaseController
 {
     protected $layout = 'admin.layouts.master';
 
     // 主頁
-    public function index()
+    public function index($parent_id = 0)
     {
+        if(Input::all()) {
+            if(Input::get('id')) {
+                $model = Taxonomy::find(Input::get('id'));
+            } else {
+                $model = new Taxonomy;
+            }
+            $model->name = Input::get('name');
+            $model->user_id = 0;
+            $model->parent_id = Input::get('parent_id');
+            $model->image = Input::get('image');
+            $model->save();
+        }
         $data['bread'] = array(array(
             'name' => '商品分類設定',
             'icon_set' => 'icon-sitemap'
         ));
+        if($parent_id != 0) {
+            $data['parent_id'] = $parent_id;
+            $parent = Taxonomy::find($parent_id);
+            $data['parent_name'] = $parent->name;
+        } else {
+            $data['parent_id'] = 0;
+            $data['parent_name'] = null;
+        }
+        $data['model'] = Taxonomy::where('parent_id', '=', $parent_id)->get();
         $this->layout->nest('content', 'admin.taxonomy.index', $data);
     }
 
@@ -92,14 +114,14 @@ class TaxonomyController extends BaseController
     }
 
     // 刪除分類
-    public function delete()
+    public function delete($pk)
     {
         $this->layout = null;
-        $model = Taxonomy::find(Input::get('pk'));
+        $model = Taxonomy::find($pk);
         if($model) {
             $model->delete();
         }
-        echo '{"success": true}';
+        return Redirect::route('taxonomy');
     }
 
     // 更新排序
@@ -114,5 +136,13 @@ class TaxonomyController extends BaseController
             $model->save();
         }
         echo '{"success": true}';
+    }
+
+    // 取得taxonomy
+    public function getTaxonomy()
+    {
+        $this->layout = null;
+        $model = Taxonomy::find(Input::get('id'))->toJSON();
+        echo $model;
     }
 }

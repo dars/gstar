@@ -27,7 +27,7 @@ $app->redirectIfTrailingSlash();
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('gstar.local'),
+	'local' => array('*.local'),
 
 ));
 

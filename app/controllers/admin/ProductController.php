@@ -75,14 +75,14 @@ class ProductController extends BaseController {
                         $model2->weight = $length - $index;
                         $model2->save();
                     }
-                    $imgs = expolde(',', Input::get('img_files'));
-                    if(isset($imgs)){
-                        foreach($imgs as $t){
-                            $model3 = new Image;
-                            $model3->product_id = $model->id;
-                            $model3->name = $t;
-                            $model3->save();
-                        }
+                }
+                $imgs = explode(',', Input::get('img_files'));
+                if(isset($imgs)){
+                    foreach($imgs as $t){
+                        $model3 = new Image;
+                        $model3->product_id = $model->id;
+                        $model3->name = $t;
+                        $model3->save();
                     }
                 }
             }
@@ -149,16 +149,16 @@ class ProductController extends BaseController {
                             $model2->weight = $length - $index;
                             $model2->save();
                         }
-                        $imgs = explode(',', Input::get('img_files'));
-                        Image::where('product_id', '=', $id)->delete();
-                        if($imgs) {
-                            foreach($imgs as $t){
-                                if($t != ''){
-                                    $model3 = new Image;
-                                    $model3->product_id = $model->id;
-                                    $model3->name = $t;
-                                    $model3->save();
-                                }
+                    }
+                    $imgs = explode(',', Input::get('img_files'));
+                    Image::where('product_id', '=', $id)->delete();
+                    if($imgs) {
+                        foreach($imgs as $t){
+                            if($t != ''){
+                                $model3 = new Image;
+                                $model3->product_id = $model->id;
+                                $model3->name = $t;
+                                $model3->save();
                             }
                         }
                     }

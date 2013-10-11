@@ -9,6 +9,7 @@ use Session;
 use Redirect;
 use DB;
 use Input;
+use Mail;
 
 class ProductController extends BaseController {
 
@@ -70,6 +71,20 @@ class ProductController extends BaseController {
 
     public function inquiry()
     {
+        if(Input::all()) {
+            $data = array();
+            $data['name'] = Input::get('name');
+            $data['company'] = Input::get('company');
+            $data['tel'] = Input::get('tel');
+            $data['email'] = Input::get('email');
+            $data['products'] = Input::get('products');
+            Mail::send('emails.inquiry', $data, function($message)
+            {
+                $message->to(Input::get('email'), Input::get('name'))->subject('[Inquiry] '.Input::get('name').' send from web.');
+            });
+            Session::forget('inquiry');
+            Session::flash('notice', 'mail send success.');
+        }
         $inquiry = Session::get('inquiry');
         if(count($inquiry) < 1) {
             return Redirect::route('product.index');

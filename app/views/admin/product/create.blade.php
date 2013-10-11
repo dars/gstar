@@ -14,6 +14,7 @@
 @section('head')
     {{ HTML::style('components/jquery-file-upload/css/jquery.fileupload-ui.css') }}
     {{ HTML::script('components/angular/angular.min.js') }}
+    {{ HTML::script('components/angular-route/angular-route.min.js') }}
     {{ HTML::script('components/angular-ui/build/angular-ui.js') }}
     {{ HTML::script('components/angular-bootstrap/ui-bootstrap.js') }}
     {{ HTML::script('http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js') }}
@@ -50,7 +51,7 @@ $(function(){
     });
     $.uniform.restore("input[type=file]");
     $('#fileupload').fileupload({
-        url: '{{ URL::route('upload.image') }}',
+        url: '/libraries/index.php',
         dataType: 'json',
         done: function (e, data) {
             var files_str = $('#files').val();
@@ -60,16 +61,17 @@ $(function(){
                 var files_ar = [];
             }
 
-            $.each(data.result.files, function (index, file) {
+            $.each(data.files, function (index, file) {
                 if(files_ar.length < 4) {
+                    console.log(file);
                     var dom = '<div class="span3">'+
-                              '<a href="javascript:void(0)" class="thumbnail" id="thumb_'+file+'">'+
-                              '<img src="/upload/images/'+file+'" alt="" style="width:100px;height:100px;">'+
+                              '<a href="javascript:void(0)" class="thumbnail" id="thumb_'+file.name+'">'+
+                              '<img src="/upload/images/'+file.name+'" alt="" style="width:100px;height:100px;">'+
                               '</a>'+
                               '</div>';
                     $(dom).appendTo('#thumb_block');
 
-                    files_ar.push(file);
+                    files_ar.push(file.name);
                     $('#files').val(files_ar.join(','));
                 }
             });
@@ -120,7 +122,7 @@ $(function(){
 @stop
 
 @section('content')
-    {{ Form::(array('route' => array('admin.product.store'), 'class' => 'form-horizontal fill-up', 'ng-controller' => 'product')) }}
+    {{ Form::open(array('route' => array('admin.product.store'), 'class' => 'form-horizontal fill-up', 'ng-controller' => 'product')) }}
         @include('admin.product.form')
     {{ Form::close() }}
 @stop

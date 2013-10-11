@@ -1,0 +1,43 @@
+build_settings:
+    ignore:
+        - "vendor"
+        - "Tests"
+        - "bootstrap"
+        - "public"
+        - "app/storage"
+        - "app/tests"
+        - "app/start"
+        - "app/config"
+        - "app/database"
+
+    mysql:
+        host: "127.0.0.1"
+        user: "root"
+        pass: "root"
+
+setup:
+    mysql:
+        - "DROP DATABASE IF EXISTS test;"
+        - "CREATE DATABASE test;"
+        - "GRANT ALL PRIVILEGES ON test.* TO test@'localhost' IDENTIFIED BY 'test';"
+    composer:
+        action: "install"
+
+test:
+    # php_unit:
+    #     config:
+    #         - "PHPUnit-all.xml"
+    #         - "PHPUnit-ubuntu-fix.xml"
+    #     directory:
+    #         - "tests/"
+    #     run_from: "phpunit/"
+    php_mess_detector:
+        allow_failures: true
+    php_code_sniffer:
+        standard: "PSR2"
+    php_cpd:
+        allow_failures: true
+
+complete:
+    mysql:
+        - "DROP DATABASE IF EXISTS test;"

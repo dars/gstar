@@ -9,12 +9,12 @@
                 <span class="title">登入管理帳號</span>
             </div>
             <div class="box-content padded">
-                {{ Form::open(array('class'=>'separate-sections')) }}
+                {{ Form::open(array('url'=>'/admin/users/login', 'class'=>'separate-sections')) }}
                     <div class="input-prepend">
                         <span class="add-on" href="#">
                             <i class="icon-user"></i>
                         </span>
-                        {{ Form::text('username', null, array('placeholder' => '登入帳號')) }}
+                        {{ Form::text('email', null, array('placeholder' => '登入帳號')) }}
                     </div>
                     <div class="input-prepend">
                         <span class="add-on" href="#">

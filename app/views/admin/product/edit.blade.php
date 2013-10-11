@@ -14,6 +14,7 @@
 @section('head')
     {{ HTML::style('components/jquery-file-upload/css/jquery.fileupload-ui.css') }}
     {{ HTML::script('components/angular/angular.min.js') }}
+    {{ HTML::script('components/angular-route/angular-route.min.js') }}
     {{ HTML::script('components/angular-ui/build/angular-ui.js') }}
     {{ HTML::script('components/angular-bootstrap/ui-bootstrap.js') }}
     {{ HTML::script('http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js') }}
@@ -74,16 +75,17 @@ $(function(){
                 var files_ar = [];
             }
 
-            $.each(data.result.files, function (index, file) {
+            $.each(data.files, function (index, file) {
                 if(files_ar.length < 4) {
+                    console.log(file);
                     var dom = '<div class="span3">'+
-                              '<a href="javascript:void(0)" class="thumbnail" id="thumb_'+file+'">'+
-                              '<img src="/upload/images/'+file+'" alt="" style="width:100px;height:100px;">'+
+                              '<a href="javascript:void(0)" class="thumbnail" id="thumb_'+file.name+'">'+
+                              '<img src="/upload/images/'+file.name+'" alt="" style="width:100px;height:100px;">'+
                               '</a>'+
                               '</div>';
                     $(dom).appendTo('#thumb_block');
 
-                    files_ar.push(file);
+                    files_ar.push(file.name);
                     $('#files').val(files_ar.join(','));
                 }
             });
@@ -101,7 +103,7 @@ $(function(){
     $(document).on('click', '.thumbnail', function(){
         var flag = confirm('確定要刪除此張照片？');
         var filename = $(this).attr('id').split('_')[1];
-        console.log(filename);
+
         if(flag) {
             $(this).parent().fadeOut();
             var files_str = $('#files').val();

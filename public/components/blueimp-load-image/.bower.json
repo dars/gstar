@@ -60,5 +60,6 @@
     "commit": "f905b15c2e30efbec67e71e164c122d71c2bfdcc"
   },
   "_source": "git://github.com/blueimp/JavaScript-Load-Image.git",
-  "_target": ">=1.7.3"
+  "_target": ">=1.7.3",
+  "_originalSource": "blueimp-load-image"
 }

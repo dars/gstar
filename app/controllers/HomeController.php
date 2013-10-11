@@ -1,6 +1,9 @@
 <?php
 namespace Controllers;
 use BaseController;
+use Input;
+use Mail;
+use Session;
 
 class HomeController extends BaseController {
 
@@ -32,6 +35,19 @@ class HomeController extends BaseController {
 
     public function contact()
     {
+        if(Input::all()){
+            $data['subject'] = Input::get('subject');
+            $data['name'] = Input::get('name');
+            $data['company'] = Input::get('company');
+            $data['email'] = Input::get('email');
+            $data['phone'] = Input::get('phone');
+            $data['email_content'] = Input::get('message');
+            Mail::send('emails.contact', $data, function($message)
+            {
+                $message->to(Input::get('email'), Input::get('name'))->subject('[Contact] '.Input::get('subject'));
+            });
+            Session::flash('notice', 'mail send success.');
+        }
         $this->layout->nest('content', 'frontend.contact');
     }
 

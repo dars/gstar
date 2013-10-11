@@ -29,14 +29,14 @@
                 <a class="brand" href="#">G-Star Admin Panel</a>
 
                 <div class="nav-collapse nav-collapse-top collapse">
-                    @if(Auth::check())
+                    @if(Sentry::check())
                     <ul class="nav full pull-right">
                         <li class="dropdown user-avatar">
 
                             <!-- the dropdown has a custom user-avatar class, this is the small avatar with the badge -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span>
-                                    <span>系統管理者 ({{ Auth::user()->username }})<i class="icon-caret-down"></i></span>
+                                    <span>系統管理者 <i class="icon-caret-down"></i></span>
                                 </span>
                             </a>
 
@@ -53,7 +53,7 @@
             </div>
         </div>
     </div>
-    @if(Auth::check())
+    @if(Sentry::check())
     <!-- 側邊欄 -->
     <div class="sidebar-background">
         <div class="primary-sidebar-background"></div>

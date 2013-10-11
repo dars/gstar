@@ -10,7 +10,7 @@ class FilehandlerController extends BaseController {
     {
         $this->layout = null;
         $files = Input::file('files'); // your file upload input field in the form should be named 'file'
-        dd($_FILES);
+
         if($files){
             $res = array('files' => array());
             foreach($files as $index => $file){

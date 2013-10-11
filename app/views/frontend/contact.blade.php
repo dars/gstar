@@ -1,3 +1,37 @@
+@section('script')
+<script>
+$(function(){
+    $('#form1').submit(function(){
+        if ($('input[name=subject]').val() == '') {
+            showWarningToast('please fill in your subject');
+            return false;
+        }
+        if ($('input[name=name]').val().length < 1) {
+            showWarningToast('please fill in your name');
+            return false;
+        }
+        if ($('input[name=company]').val().length < 1) {
+            showWarningToast('please fill in your company name');
+            return false;
+        }
+        if ($('input[name=email]').val().length < 1) {
+            showWarningToast('please fill in your email');
+            return false;
+        }
+        if ($('input[name=phone]').val().length < 1) {
+            showWarningToast('please fill in your phone');
+            return false;
+        }
+        if ($('input[name=message]').val().length < 1) {
+            showWarningToast('please fill in your message');
+            return false;
+        }
+        return true;
+    });
+});
+</script>
+@stop
+
 @section('banner')
     {{ HTML::image('assets/frontend/images/contact_banner.jpg') }}
 @stop
@@ -52,11 +86,11 @@
                     <tr>
                         <td width="220"><span class="inputTitle">Subject*</span><br />
                             <label for="select"></label>
-                            <select name="select" id="select">
-                                <option selected="selected">--Select Subject--</option>
-                                <option>Sales Contacts</option>
-                                <option>Procucts Questions</option>
-                                <option>Others</option>
+                            <select name="subject" id="select">
+                                <option selected="selected" value=''>--Select Subject--</option>
+                                <option value="Sales Contacts">Sales Contacts</option>
+                                <option value="Procucts Questions">Procucts Questions</option>
+                                <option value="Others">Others</option>
                             </select></td>
                         <td>&nbsp;</td>
                     </tr>
@@ -67,9 +101,9 @@
                     <tr>
                         <td><span class="inputTitle">Name*</span><br />
                             <label for="textfield"></label>
-                            <input type="text" name="textfield" id="textfield" /></td>
+                            <input type="text" name="name" id="textfield" /></td>
                         <td><span class="inputTitle">Company Name*</span><br />
-                            <input type="text" name="textfield2" id="textfield2" /></td>
+                            <input type="text" name="company" id="textfield2" /></td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
@@ -77,9 +111,9 @@
                     </tr>
                     <tr>
                         <td class="inputTitle">Email*<br />
-                            <input type="text" name="textfield3" id="textfield3" /></td>
+                            <input type="text" name="email" id="textfield3" /></td>
                         <td class="inputTitle">Phone*<br />
-                            <input type="text" name="textfield4" id="textfield4" /></td>
+                            <input type="text" name="phone" id="textfield4" /></td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
@@ -88,7 +122,7 @@
                     <tr>
                         <td colspan="2" class="inputTitle">Message*<br />
                             <label for="textarea"></label>
-                            <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea></td>
+                            <textarea name="message" id="textarea" cols="45" rows="5"></textarea></td>
                     </tr>
                     <tr>
                         <td colspan="2" align="center" class="inputTitle">&nbsp;</td>

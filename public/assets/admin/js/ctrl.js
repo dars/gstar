@@ -1,4 +1,4 @@
-var ctrl = angular.module('gstarApp', ['ui','ui.bootstrap','blueimp.fileupload'], function($routeProvider, $locationProvider) {
+var ctrl = angular.module('gstarApp', ['ngRoute','ui','ui.bootstrap','blueimp.fileupload'], function($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
         templateUrl: 'taxo_list',
         controller: 'getTaxonomyData'

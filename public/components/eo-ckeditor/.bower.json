@@ -7,12 +7,13 @@
     "components"
   ],
   "homepage": "https://github.com/eymengunay/ckeditor",
-  "_release": "229f8dac1b",
+  "_release": "c2a2058f80",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "229f8dac1b6284b293fb69186aff5af78321f2d9"
+    "commit": "c2a2058f80cd218143b4bb1fa33657d0e533a890"
   },
   "_source": "git://github.com/eymengunay/ckeditor.git",
-  "_target": "*"
+  "_target": "*",
+  "_originalSource": "git://github.com/eymengunay/ckeditor.git"
 }

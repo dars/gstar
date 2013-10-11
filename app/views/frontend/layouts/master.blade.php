@@ -15,6 +15,7 @@
 <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
 {{ HTML::style('assets/frontend/css/slider.css') }}
 {{ HTML::style('assets/wysiwyg-color.css') }}
+{{ HTML::style('components/jquery-toastmessage-plugin/src/main/resources/css/jquery.toastmessage.css') }}
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="icon" type="image/gif" href="animated_favicon1.gif">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -25,9 +26,19 @@
 {{ HTML::script('assets/frontend/js/jquery.hashchange.min.js') }}
 {{ HTML::script('assets/frontend/js/jquery.easytabs.min.js') }}
 {{ HTML::script('assets/frontend/js/jquery-ui.min.js') }}
+{{ HTML::script('components/jquery-toastmessage-plugin/src/main/javascript/jquery.toastmessage.js') }}
 <script>
+function showSuccessToast(str) {
+    $().toastmessage('showSuccessToast', str);
+}
+function showWarningToast(str) {
+    $().toastmessage('showWarningToast', str);
+}
 $(window).load(function(){
     var slr = $('#gstarSlider').autoSlider();
+    @if(Session::has('notice'))
+        showSuccessToast('{{ Session::get('notice') }}');
+    @endif
 });
 </script>
 @yield('script')

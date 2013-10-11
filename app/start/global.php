@@ -79,5 +79,11 @@ App::down(function()
 | definitions instead of putting them all in the main routes file.
 |
 */
+$app['Cartalyst\Sentry\Sentry'] = $app['sentry'];
+
+$throttleProvider = Sentry::getThrottleProvider();
+
+// Disable the Throttling Feature
+$throttleProvider->disable();
 
 require app_path().'/filters.php';
