@@ -70,7 +70,7 @@ $(function(){
 
                 $('#img_upload_block').hide();
                 $('#img_link_block').show();
-                $('#img_link').attr('href', '/upload/images/'+data.name);
+                $('#img_link').attr('href', '/upload/images/'+data.image);
                 $('#form_image').val(data.name);
             }
         });

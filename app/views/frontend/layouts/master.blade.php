@@ -35,6 +35,9 @@ function showWarningToast(str) {
     $().toastmessage('showWarningToast', str);
 }
 $(window).load(function(){
+    $('#searchbox').click(function(){
+        $(this).attr('placeholder', '');
+    });
     var slr = $('#gstarSlider').autoSlider();
     @if(Session::has('notice'))
         showSuccessToast('{{ Session::get('notice') }}');
@@ -64,7 +67,7 @@ $(window).load(function(){
         </div>
         <div id="searchwrapper">
             <form action="{{ URL::route('frontend.products.search') }}" method="get">
-                <input type="text" class="searchbox" name="keyword" placeholder="Product Search" value="{{ Input::get('keyword','') }}" />
+                <input type="text" class="searchbox" id="searchbox" name="keyword" placeholder="Product Search" value="{{ Input::get('keyword','') }}" />
                 <input type="image" src="{{ asset('assets/frontend/images/search_icon.png') }}" class="searchbox_submit" />
             </form>
         </div>

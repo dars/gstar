@@ -1,5 +1,5 @@
 @section('banner')
-    {{ HTML::image('assets/frontend/images/all_products_banner.jpg') }}
+    {{ HTML::image('/upload/images/'.$banner_img) }}
 @stop
 
 @section('breadcrumb')

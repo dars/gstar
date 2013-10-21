@@ -56,6 +56,9 @@ $(function(){
                         <span class="title">產品列表</span>
                         <ul class="box-toolbar">
                             <li>
+                                <div><a class="btn btn-green" href="{{ url('admin/product/create?type=2') }}">新增舊產品</a></div>
+                            </li>
+                            <li>
                                 <div><a class="btn btn-red" href="{{ URL::route('admin.product.create') }}">新增產品</a></div>
                             </li>
                         </ul>

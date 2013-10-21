@@ -1,12 +1,12 @@
-<?php
-namespace Controllers\Admin;
+<?php namespace Controllers\Admin;
+
 use Cartalyst\Sentry\Users\LoginRequiredException;
 use Cartalyst\Sentry\Users\PasswordRequiredException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
 use Cartalyst\Sentry\Users\UserExistsException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Throttling\UserSuspendedException;
-use BaseController;
+use Controllers\BaseController;
 use View;
 use Taxonomy;
 use Input;
@@ -17,7 +17,7 @@ use Redirect;
 use Auth;
 use Sentry;
 
-class UsersController extends \BaseController {
+class UsersController extends BaseController {
     protected $layout = 'admin.layouts.master';
     public function login()
     {

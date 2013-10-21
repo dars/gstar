@@ -1,7 +1,7 @@
 <?php
 namespace Controllers\Admin;
 
-use BaseController;
+use Controllers\BaseController;
 use View;
 use Product;
 use Taxonomy;
@@ -61,6 +61,8 @@ class ProductController extends BaseController {
             $model->status = Input::get('status');
             $model->taxonomy_id = Input::get('taxo2');
             $model->weight = Input::get('weight');
+            $model->type = Input::get('type');
+            $model->user_id = 1;
             if($model->save()) {
                 $tmp_title_ar = Input::get('tab_title');
                 $tmp_content_ar = Input::get('tab_content');

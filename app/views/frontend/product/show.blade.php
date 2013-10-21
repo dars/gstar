@@ -31,6 +31,12 @@ $(function(){
     $('#show_big_btn').click(function(){
         $('#big_image').toggle();
     });
+    $('.pix_list').click(function(){
+        var img_src = $(this).attr('src');
+        $('#big_image').hide();
+        $('#big_img').attr('src', img_src);
+        $('#norm_img').attr('src', img_src);
+    });
 });
 </script>
 @stop
@@ -54,9 +60,9 @@ $(function(){
     <div class="pBig" id="pBig" style="overflow:hidden;">
         @if($pix)
             <div id="big_image" style="position:absolute;">
-                {{ HTML::image('upload/images/'.$pix[0]['name']) }}
+                {{ HTML::image('upload/images/'.$pix[0]['name'], '', array('id'=>'big_img')) }}
             </div>
-            {{ HTML::image('upload/images/'.$pix[0]['name'], '', array('width'=>400, 'height'=>400)) }}
+            {{ HTML::image('upload/images/'.$pix[0]['name'], '', array('id'=>'norm_img', 'width'=>400, 'height'=>400)) }}
             <div class="imgZoom"><a href="javascript:void(0)" id="show_big_btn">{{ HTML::image('assets/frontend/images/zoom.gif') }}</a></div>
         @else
             <img src="http://placehold.it/400x400&text=COMING SOON">
@@ -73,7 +79,7 @@ $(function(){
             @if($pix)
             <ul>
                 @foreach($pix as $t)
-                <li>{{ HTML::image('upload/images/'.$t['name'], null, array('style'=>'width:120px;height:120px;')) }}</li>
+                <li>{{ HTML::image('upload/images/'.$t['name'], null, array('style'=>'width:120px;height:120px;', 'class'=>'pix_list')) }}</li>
                 @endforeach
             </ul>
             @endif

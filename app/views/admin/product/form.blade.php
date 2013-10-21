@@ -62,7 +62,7 @@
                 </li>
             </ul>
         </div>
-        @if(!isset($model) || $model->type == 1)
+        @if((!isset($model) || $model->type == 1) && Input::get('type') != '2' )
         <div class="row-fluid" ng-controller="tab_ctrl">
             <div class="span12 padded">
                 <div class="box">
@@ -105,6 +105,7 @@
 
     <div class="form-actions">
         {{ Form::hidden('id', Input::get('id', @$model?$model->id:''), array('id' => 'id')) }}
+        {{ Form::hidden('type', Input::get('type', @$model?$model->type:1), array('id' => 'type')) }}
         <button type="submit" class="btn btn-blue">儲存</button>
         <a href="{{ URL::route('admin.product.index') }}">取消</a>
     </div>

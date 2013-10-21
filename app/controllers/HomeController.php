@@ -1,6 +1,6 @@
 <?php
 namespace Controllers;
-use BaseController;
+use Controllers\BaseController;
 use Input;
 use Mail;
 use Session;

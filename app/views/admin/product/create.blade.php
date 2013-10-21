@@ -39,6 +39,19 @@
 
 @section('script')
 $(function(){
+    @if(Input::get('type') == 2)
+    $('#description').wysihtml5({
+        "font-styles": true,
+        "emphasis": true,
+        "lists": true,
+        "html": true,
+        "link": true,
+        "image": true,
+        "stylesheets": ["/assets/wysiwyg-color.css"],
+        "color": true
+    });
+    $('.description').css('border', '1px #CCC solid');
+    @else
     $('.content_ta').wysihtml5({
         "font-styles": true,
         "emphasis": true,
@@ -49,6 +62,10 @@ $(function(){
         "stylesheets": ["/assets/wysiwyg-color.css"],
         "color": true
     });
+    @endif
+
+
+
     $.uniform.restore("input[type=file]");
     $('#fileupload').fileupload({
         url: '/libraries/index.php',

@@ -1,6 +1,6 @@
 <?php
 namespace Controllers;
-use BaseController;
+use Controllers\BaseController;
 use Tab;
 use Taxonomy;
 use Product;
@@ -25,9 +25,11 @@ class ProductController extends BaseController {
     public function second($taxo_2)
     {
         $data = array();
+        $taxo2 = Taxonomy::find($taxo_2);
         $data['taxo1_id'] = Taxonomy::getParentId($taxo_2);
         $data['taxo1'] = Taxonomy::getName($data['taxo1_id']);
-        $data['taxo2'] = Taxonomy::getName($taxo_2);
+        $data['taxo2'] = $taxo2->name;
+        $data['banner_img'] = $taxo2->image;
         $data['new'] = Product::select(array('id', 'name', 'model'))->where('taxonomy_id', '=', $taxo_2)->where('type', '=', 1)->orderby('weight','desc')->paginate(12);
         $data['old'] = Product::select(array('id', 'name', 'model'))->where('taxonomy_id', '=', $taxo_2)->where('type', '=', 2)->orderby('weight','desc')->paginate(12);
         $data['old_items'] = array();
